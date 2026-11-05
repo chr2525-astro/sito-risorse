@@ -2,9 +2,9 @@
 sito risorse per astrofili
 
 Struttura delle cartelle/file
+# Struttura delle cartelle e dei file
 
-
-
+```text
 ├── index.html            -- pagina benvenuto con widget per osservazione --- HOMEPAGE
 ├── allskycam.html        -- pagina per mappa allskycam
 ├── astrofili.html        -- pagina per mappa associazioni astrofili
@@ -61,22 +61,24 @@ Struttura delle cartelle/file
 │   └── backup/           -- copia di sicurezza dei documenti presentati nella pagina biblioteca, anche di quelli attualmente reperibili in rete
 │
 └── README.txt            -- questo file
+```
 
+---
 
+## Collegamento tra file
 
-
-
-collegamento tra file
-index.html menu.js
-astrofili.html astrofili.js astrofili.json menu.js
-allskycam.html allskycam.js allskycam.json menu.js
-mobile.html menu.js links.js mobile.json
-software.html menu.js links.js software.json
-biblioteca.html menu.js links.js biblioteca.json
-missioni.html menu.js missioni.js missioni.json
-satelliti.html menu.js satellites.js
-siti.html menu.js link.js siti.json
-youtube.html menu.js link.js youtube.json
-galleria.html menu.js gallery.js gallery.json
-oggetti.html menu.js coordcalc.js luoghi.js oggetti.js luoghi.json oggetti.json
-oggetti_mio.html menu.js coordcalc.js luoghi.js oggetti_mio.js luoghi.json oggetti_mio.json
+| Pagina HTML | Script JavaScript collegati | File di Dati (JSON) associati |
+| :--- | :--- | :--- |
+| **index.html** | `menu.js` | *Nessuno* |
+| **astrofili.html** | `astrofili.js`, `menu.js` | `astrofili.json` |
+| **allskycam.html** | `allskycam.js`, `menu.js` | `allskycam.json` |
+| **mobile.html** | `menu.js`, `links.js` | `mobile.json` |
+| **software.html** | `menu.js`, `links.js` | `software.json` |
+| **biblioteca.html** | `menu.js`, `links.js` | `biblioteca.json` |
+| **missioni.html** | `menu.js`, `missioni.js` | `missioni.json` |
+| **satelliti.html** | `menu.js`, `satellites.js` | *Nessuno* |
+| **siti.html** | `menu.js`, `link.js` | `siti.json` |
+| **youtube.html** | `menu.js`, `link.js` | `youtube.json` |
+| **galleria.html** | `menu.js`, `gallery.js` | `gallery.json` |
+| **oggetti.html** | `menu.js`, `coordcalc.js`, `luoghi.js`, `oggetti.js` | `luoghi.json`, `oggetti.json` |
+| **oggetti_mio.html** | `menu.js`, `coordcalc.js`, `luoghi.js`, `oggetti_mio.js` | `luoghi.json`, `oggetti_mio.json` |
