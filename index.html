@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#102a24">
+    <meta name="description" content="Una raccolta curata di strumenti, mappe e risorse per osservare il cielo.">
+    <title>Orbite — Risorse per astrofili</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#inizio" aria-label="Orbite, pagina iniziale">
+        <span class="brand-mark" aria-hidden="true">✳</span>
+        <span>orbite<span class="brand-period">.</span></span>
+      </a>
+      <nav class="top-nav" aria-label="Navigazione principale">
+        <a class="nav-link is-current" href="#catalogo">Esplora</a>
+        <a class="nav-link" href="#catalogo" data-filter-link="community">Community</a>
+        <a class="nav-link" href="#about">Il progetto</a>
+      </nav>
+      <a class="top-action" href="#catalogo">Trova una risorsa <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main id="inizio">
+      <section class="intro" aria-labelledby="page-title">
+        <div class="intro-copy">
+          <p class="eyebrow"><span class="live-dot" aria-hidden="true"></span> IL TUO PUNTO DI PARTENZA, SOTTO LE STELLE</p>
+          <h1 id="page-title">Il cielo è grande.<br><span>Comincia da qui.</span></h1>
+          <p class="intro-text">Mappe, strumenti e comunità selezionati per chi ama guardare in alto. Meno tempo a cercare, più tempo a osservare.</p>
+          <a class="intro-link" href="#catalogo">Esplora le risorse <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="intro-visual" role="img" aria-label="Nebulosa luminosa nello spazio profondo">
+          <div class="visual-caption"><span>01 / 06</span><span>UNA FINESTRA SULL'UNIVERSO</span></div>
+          <span class="visual-star" aria-hidden="true">✳</span>
+        </div>
+        <div class="intro-index" aria-hidden="true"><span>OSSERVARE</span><span>IMPARARE</span><span>CONDIVIDERE</span></div>
+      </section>
+
+      <section class="catalog" id="catalogo" aria-labelledby="catalog-title">
+        <div class="catalog-heading">
+          <div>
+            <p class="eyebrow section-eyebrow">UNA RACCOLTA IN CONTINUO MOVIMENTO</p>
+            <h2 id="catalog-title">La tua cassetta degli attrezzi</h2>
+          </div>
+          <p class="catalog-note">Risorse scelte per accompagnarti dalla prima costellazione alla prossima lunga esposizione.</p>
+        </div>
+
+        <div class="toolbar">
+          <div class="filters" id="category-filters" role="group" aria-label="Filtra per categoria">
+            <button class="filter-button is-active" type="button" data-category="all" aria-pressed="true">Tutte</button>
+          </div>
+          <label class="search-box">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <span class="visually-hidden">Cerca risorse</span>
+            <input id="search" type="search" placeholder="Cerca una risorsa..." autocomplete="off">
+            <kbd>/</kbd>
+          </label>
+        </div>
+
+        <div class="results-line" aria-live="polite">
+          <p id="results-count">Caricamento risorse…</p>
+          <label class="sort-control" for="sort">Ordina per
+            <select id="sort">
+              <option value="featured">Selezione</option>
+              <option value="name">Nome A–Z</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="resource-grid" id="resource-grid" aria-live="polite" aria-busy="true"></div>
+        <div class="empty-state" id="empty-state" hidden>
+          <span aria-hidden="true">☄</span>
+          <h3>Nessuna risorsa trovata</h3>
+          <p>Prova a cambiare ricerca o categoria.</p>
+          <button class="reset-button" id="reset-filters" type="button">Azzera filtri</button>
+        </div>
+        <div class="load-error" id="load-error" hidden>
+          <p>Non riesco a caricare le risorse. Avvia il sito tramite un server locale e riprova.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer" id="about">
+      <a class="brand footer-brand" href="#inizio"><span class="brand-mark" aria-hidden="true">✳</span><span>orbite<span class="brand-period">.</span></span></a>
+      <p>Fatto per chi, ogni tanto, alza gli occhi.</p>
+      <span class="footer-note">UNA MAPPA, NON UN CONFINE <span aria-hidden="true">✳</span></span>
+    </footer>
+  </body>
+</html>

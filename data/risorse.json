@@ -1,0 +1,155 @@
+{
+  "categories": [
+    { "id": "mappe", "label": "Mappe del cielo" },
+    { "id": "osservazione", "label": "Osservazione" },
+    { "id": "astrofotografia", "label": "Astrofotografia" },
+    { "id": "community", "label": "Community" },
+    { "id": "imparare", "label": "Imparare" }
+  ],
+  "resources": [
+    {
+      "title": "Stellarium Web",
+      "description": "Un planetario interattivo per riconoscere stelle, pianeti e costellazioni dal browser.",
+      "url": "https://stellarium-web.org/",
+      "category": "mappe",
+      "type": "Web app",
+      "featured": true
+    },
+    {
+      "title": "Heavens-Above",
+      "description": "Previsioni dei passaggi della ISS, dei satelliti e di altri oggetti visibili a occhio nudo.",
+      "url": "https://www.heavens-above.com/",
+      "category": "osservazione",
+      "type": "Previsioni",
+      "featured": true
+    },
+    {
+      "title": "Clear Outside",
+      "description": "Previsioni meteo pensate per l'osservazione: nuvole, trasparenza e buio astronomico.",
+      "url": "https://clearoutside.com/",
+      "category": "osservazione",
+      "type": "Meteo",
+      "featured": true
+    },
+    {
+      "title": "Light Pollution Map",
+      "description": "Esplora l'inquinamento luminoso e individua luoghi con cieli più bui.",
+      "url": "https://www.lightpollutionmap.info/",
+      "category": "osservazione",
+      "type": "Mappa",
+      "featured": true
+    },
+    {
+      "title": "AstroBin",
+      "description": "Una grande galleria per condividere immagini astronomiche e scoprire le tecniche di ripresa.",
+      "url": "https://www.astrobin.com/",
+      "category": "astrofotografia",
+      "type": "Galleria",
+      "featured": true
+    },
+    {
+      "title": "Telescopius",
+      "description": "Pianifica sessioni e inquadrature, cerca oggetti del profondo cielo e consulta le effemeridi.",
+      "url": "https://telescopius.com/",
+      "category": "astrofotografia",
+      "type": "Pianificazione",
+      "featured": true
+    },
+    {
+      "title": "AstroSpheric",
+      "description": "Previsioni di seeing e trasparenza per capire quando il cielo sarà davvero favorevole.",
+      "url": "https://www.astrospheric.com/",
+      "category": "osservazione",
+      "type": "Meteo",
+      "featured": false
+    },
+    {
+      "title": "In-The-Sky.org",
+      "description": "Calendario di eventi astronomici, mappe e informazioni aggiornate sul cielo osservabile.",
+      "url": "https://in-the-sky.org/",
+      "category": "mappe",
+      "type": "Effemeridi",
+      "featured": false
+    },
+    {
+      "title": "NASA Eyes",
+      "description": "Viaggia in 3D nel sistema solare e segui missioni e sonde con visualizzazioni interattive.",
+      "url": "https://eyes.nasa.gov/",
+      "category": "imparare",
+      "type": "Esplorazione 3D",
+      "featured": false
+    },
+    {
+      "title": "NASA Astronomy Picture of the Day",
+      "description": "Una selezione quotidiana di immagini astronomiche accompagnate da spiegazioni degli esperti.",
+      "url": "https://apod.nasa.gov/apod/astropix.html",
+      "category": "imparare",
+      "type": "Galleria",
+      "featured": false
+    },
+    {
+      "title": "AAVSO Variable Star Plotter",
+      "description": "Crea mappe stellari dettagliate per osservare e stimare la luminosità di stelle variabili.",
+      "url": "https://www.aavso.org/apps/vsp/",
+      "category": "mappe",
+      "type": "Carte stellari",
+      "featured": false
+    },
+    {
+      "title": "Aladin Lite",
+      "description": "Esplora il cielo su immagini e cataloghi astronomici professionali, direttamente online.",
+      "url": "https://aladin.cds.unistra.fr/AladinLite/",
+      "category": "mappe",
+      "type": "Atlante",
+      "featured": false
+    },
+    {
+      "title": "Cloudy Nights",
+      "description": "Forum internazionale per confrontarsi su telescopi, accessori e tecniche osservative.",
+      "url": "https://www.cloudynights.com/",
+      "category": "community",
+      "type": "Forum",
+      "featured": false
+    },
+    {
+      "title": "Reddit r/astrophotography",
+      "description": "Immagini, discussioni e consigli pratici dalla comunità internazionale di astrofotografi.",
+      "url": "https://www.reddit.com/r/astrophotography/",
+      "category": "community",
+      "type": "Community",
+      "featured": false
+    },
+    {
+      "title": "Unione Astrofili Italiani",
+      "description": "Associazione nazionale, iniziative locali e progetti di divulgazione e ricerca amatoriale.",
+      "url": "https://www.uai.it/",
+      "category": "community",
+      "type": "Associazione",
+      "featured": false
+    },
+    {
+      "title": "Astroimaging.it",
+      "description": "Risorse e approfondimenti in italiano dedicati all'astrofotografia e all'elaborazione.",
+      "url": "https://www.astroimaging.it/",
+      "category": "astrofotografia",
+      "type": "Guida",
+      "featured": false
+    },
+    {
+      "title": "JPL Solar System Dynamics",
+      "description": "Effemeridi e strumenti per calcolare le posizioni dei corpi del sistema solare.",
+      "url": "https://ssd.jpl.nasa.gov/",
+      "category": "osservazione",
+      "type": "Dati",
+      "featured": false
+    },
+    {
+      "title": "OpenStax Astronomy",
+      "description": "Un manuale introduttivo gratuito per approfondire i concetti fondamentali dell'astronomia.",
+      "url": "https://openstax.org/details/books/astronomy-2e",
+      "category": "imparare",
+      "type": "Libro gratuito",
+      "featured": false
+    }
+  ]
+}
