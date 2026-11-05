@@ -1,0 +1,11 @@
+{
+  "images":[
+
+{"thumb": "img/galleria/thumb/origine_elementi.jpg","full": "img/galleria/hires/origine_elementi.jpg","description": "Tavora periodica degli elementi, dove viene indicata la provenienza  degli elementi stessi","category": "Didattica"},
+{"thumb": "img/galleria/thumb/cat_messier_prop.jpg","full": "img/galleria/hires/cat_messier_prop.jpg","description": "Catalogo di Messier, dove i vari oggetti sono rappresentati con le corrette proporizioni tra loro","category": "Catalogo Astronomico"},
+{"thumb": "img/galleria/thumb/saturn_hexagon.jpg","full": "img/galleria/hires/saturn_hexagon.jpg","description": "L'esagono si trova al polo nord di Saturno, si tratta di un evento atmosferico, un gigantesco tornado dove ogni lato misura circa 13.800 Km","category": "Sistema Solare"},
+{"thumb": "img/galleria/thumb/sharpless_catalog.png","full": "img/galleria/hires/sharpless_catalog.png","description": "Catalogo Sharpless, elenco di 313 nebulose ad emissione","category": "Didattica"}
+
+
+  ]
+}
