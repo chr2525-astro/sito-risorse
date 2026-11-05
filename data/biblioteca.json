@@ -1,0 +1,43 @@
+
+
+{
+  "categorie": [
+    {
+      "nome": "Manuali",
+
+      "links": [
+{"tipo": "pdf","titolo": "Corso di Astronomia","descrizione": "Marco Monaci - Corso di astronomia","url": "https://hsmpgrid.wordpress.com/wp-content/uploads/2024/02/corso_astronomia.pdf"},
+{"tipo": "pdf","titolo": "Bignamino di Astronomia","descrizione": "Società Astronomica Italiana - Supporto per preparazione alle olimpiadi di astronomia","url": "http://www.campionatiastronomia.it/olimpiadiastronomia/wp-content/uploads/2025/01/bignamino_2025.pdf"},
+{"tipo": "website","titolo": "Astronomy 2e","descrizione": "Autori Vari - Corso di astronomia in inglese","url": "https://openstax.org/details/books/astronomy-2e"},
+{"tipo": "pdf","titolo": "Guida all'osservazione del cielo","descrizione": "Giancarlo Favero, Lucia Mazzilli - Corso di astronomia per astrofili","url": "files/guida-all-osservazione-del-cielo.pdf"}
+
+      ]
+    },
+	
+	
+    {
+      "nome": "Cataloghi",
+
+      "links": [
+{"tipo": "xls","titolo": "Catalogo Caldwell","descrizione": " - Catalogo astronomico contenente 109 oggetti deep sky compilato dall'astronomo Patrick Caldwell Moore, pubblicato nel 1995","url": "files/caldwell.xlsx"},
+{"tipo": "xls","titolo": "Catalogo Melotte","descrizione": " - Catalogo astronomico contenente 245 oggetti deep sky compilato dall'astronomo Philibert Jacques Melotte pubblicato nel 1915","url": "files/melotte.xlsx"},
+{"tipo": "pdf","titolo": "250+ Deep SKy Object Visibile with 7x35 Binoculars","descrizione": "Scott N. Harrington - 250 oggetti deep sky visibili ad occhio nudo o binocolo","url": "files/250_Catalog_v2_2.pdf"},
+{"tipo": "pdf","titolo": "The 200 Brightest Planetary Nebulae","descrizione": "Scott N. Harrington - Le 200 nebulose planetarie più brillanti","url": "files/The_200_Brightest_Planetary_Nebulae.pdf"}
+
+
+
+      ]
+    },
+    {
+      "nome": "Didattica",
+
+      "links": [
+{"tipo": "pdf","titolo": "L'universo in una scatola","descrizione": "Universe Awareness - Attività educative astronomiche per bambini e ragazzi","url": "https://it.unawe.org/static/archives/books/pdf/Universe_in_a_box_ITA.pdf"}
+
+
+      ]
+    }
+
+
+  ]
+}

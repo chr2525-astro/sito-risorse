@@ -1,0 +1,29 @@
+{
+  "categorie": [
+
+    {
+      "nome": "Planetari",
+
+      "links": [
+
+{"tipo": "software","titolo": "Stellarium","descrizione": "Ottimo Planetario","url": "https://play.google.com/store/apps/details?id=com.noctuasoftware.stellarium_free&hl=it"},
+{"tipo": "software","titolo": "Heavens-Above","descrizione": "Planetario, con particolare attenzione alla ricerca di satelliti artificiali","url": "https://play.google.com/store/apps/details?id=com.heavens_above.viewer"}
+
+
+      ]
+    },
+
+    {
+      "nome": "Pianificazione Osservazioni",
+
+      "links": [
+
+{"tipo": "software","titolo": "Stellar Catalogue","descrizione": "","url": "https://play.google.com/store/apps/details?id=it.sfc.stellarcatalogue&hl=it"}
+
+
+      ]
+    }
+
+
+      ]
+    }

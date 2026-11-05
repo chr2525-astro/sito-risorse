@@ -1,0 +1,10 @@
+{
+  "cams":[
+{"nome":"Associazione Astrofili Aurunca","lat":41.270519,"lng":13.939855,"url":"https://allskyaaa.altervista.org/","immagine":"https://allskyaaa.altervista.org/image.jpg","stato":"online"},
+{"nome":"Allsky Cam Serramanna","lat":39.422778,"lng":8.921667,"url":"https://www.allskycameraproject.com/allsky/index.php","immagine":"https://www.allskycameraproject.com/allsky/image.jpg","stato":"online"},
+{"nome":"Astrofili Pisani AAGG","lat":43.42,"lng":10.71,"url":"https://www.astrofilipisani.it/allsky/","immagine":"https://www.astrofilipisani.it/allsky/image.jpg","stato":"online"}
+
+
+
+  ]
+}

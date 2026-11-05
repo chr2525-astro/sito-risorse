@@ -1,0 +1,17 @@
+{
+  "cams":[
+{"nome":"Unione Astrofili del Tesino e della Valsugana","lat":46.063197,"lng":11.632268,"indirizzo":"c/o Biblioteca Comunale Via Venezia 16/B - Castello Tesino","provincia":"Trento","url":"https://www.osservatoriodelcelado.net","stato":"online"},
+{"nome":"Gruppo Astrofili Fiemme","lat":46.29,"lng":11.511,"indirizzo":"Via Fia 2 - Tesero","provincia":"Trento","url":"https://www.astrofilifiemme.it","stato":"online"},
+{"nome":"Associazione Astronomica G. Montanari","lat":44.863,"lng":11.003,"indirizzo":"Via per Concordia 200 - Cavezzo","provincia":"Modena","url":"https://www.astrocavezzo.it","stato":"online"},
+{"nome":"Associazione Ravennate Astrofili Rheyta","lat":44.413,"lng":12.208,"indirizzo":"Viale Santi Baldini 4/a - Ravenna","provincia":"Ravenna","url":"http://www.arar.it","stato":"online"},
+{"nome":"Associazione Astrofili Aurunca","lat":41.239,"lng":13.935,"indirizzo":"c/o Istituto Comprensivo San Leone IX Via San Leo 1 - Sessa Aurunca","provincia":"Caserta","url":"https://www.astrofiliaurunca.com/","stato":"online"},
+{"nome":"Circolo Astrofili Talmassons","lat":45.936,"lng":13.113,"indirizzo":"Via Cadorna 57 - Talmassons","provincia":"Udine","url":"https://www.castfvg.it/","stato":"online"},
+{"nome":"Gruppo Astrofili Rozzano","lat":45.376,"lng":9.148,"indirizzo":"Via Togliatti 105 - Rozzano","provincia":"Milano","url":"https://www.astrofilirozzano.it/","stato":"online"},
+{"nome":"Circolo Culturale Astronomico di Farra d'Isonzo","lat":45.915,"lng":13.525,"indirizzo":"Strada Colombara 11 - Farra d'Isonzo","provincia":"Gorizia","url":"https://www.ccaf.it","stato":"online"},
+{"nome":"Gruppo Astrofili Cinisello Balsamo","lat":45.552,"lng":9.218,"indirizzo":"Ex Scuola Manzoni, via Beato Carino 4 - Cinisello Balsamo","provincia":"Milano","url":"http://gacb.astrofili.org","stato":"online"},
+{"nome":"Circolo Astrofili Veronesi","lat":45.433,"lng":10.917,"indirizzo":"Via F. Brunelleschi 12 - Verona","provincia":"Verona","url":"http://www.astrofiliveronesi.it","stato":"online"},
+{"nome":"Associazione Astrofili Agordini Cieli Dolomitici","lat":46.381,"lng":11.975,"indirizzo":"Località Celat 9 - San Tomaso Agordino","provincia":"Belluno","url":"https://cielidolomitici.it","stato":"online"}
+
+
+  ]
+}

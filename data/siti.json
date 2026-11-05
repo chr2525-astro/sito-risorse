@@ -1,0 +1,29 @@
+{
+  "categorie": [
+
+    {
+      "nome": "Osservazione del Cielo",
+
+      "links": [
+
+{"tipo": "website","titolo": "Heavens Above","descrizione": "Passaggio satelliti, ISS e previsione osservazione","url": "https://www.heavens-above.com/"}
+
+
+      ]
+    },
+
+    {
+      "nome": "Satelliti Artificiali",
+
+      "links": [
+
+{"tipo": "website","titolo": "CelesTrack","descrizione": "Ottimo Data Base e altre info sui satelliti artificiali","url": "https://celestrak.org/"}
+
+
+      ]
+    
+
+    }
+
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "categorie": [
+
+    {
+      "nome": "Planetari",
+
+      "links": [
+
+{"tipo": "software","titolo": "Cartes du Ciel/Sky Chart","descrizione": "Programma per la creazione di mappe del cielo con diversi cataloghi a disposizione - Linux, macOS, Windows","url": "https://www.ap-i.net/skychart/start/"},
+{"tipo": "software","titolo": "Hallo Northern Sky","descrizione": "Planetario con 30.000 oggetti deep sky e stelle fino alla magnitudine 18; disponibili altri cataloghi - Linux, macOS, Windows","url": "https://www.hnsky.org/"},
+{"tipo": "software","titolo": "Stellarium","descrizione": "Ottimo planetario multilingue con oggetti del sistema solare, catologo predefinito di oltre 600.000 stelle e 80.000 oggetti del cielo profondo. Cataloghi extra disponibili - Linux, macOS, Windows","url": "https://stellarium.org/"},
+{"tipo": "software","titolo": "JavAstro","descrizione": "Planetario, calcolo effemeridi, eventi astronomici - Java","url": "https://www.astronomia.cloud/"}
+
+
+
+      ]
+    },
+
+    {
+      "nome": "Simulatore 3D",
+
+      "links": [
+
+{"tipo": "software","titolo": "Celestia","descrizione": "Simulatore spaziale 3d  - Linux, macOS, Windows","url": "https://celestiaproject.space/"},
+{"tipo": "software","titolo": "Cosmonium","descrizione": "Simulatore spaziale 3d  - Linux, macOS, Windows","url": "https://github.com/cosmonium/cosmonium"},
+{"tipo": "software","titolo": "Gaia Sky","descrizione": "Simulatore spaziale 3d  - Linux, macOS, Windows","url": "https://gaiasky.space/"},
+{"tipo": "software","titolo": "OpenSpace","descrizione": "Simulatore spaziale 3d  - Windows, macOS","url": "https://www.openspaceproject.com/"}
+
+
+      ]
+    },
+
+    {
+      "nome": "Suite",
+
+      "links": [
+
+ {"tipo": "software","titolo": "Kstars","descrizione": "Planetario, pianificazione osservazioni, astrofotografia, calcolatori - Linux, macOS, Windows","url": "https://kstars.kde.org/"}
+
+
+      ]
+    },
+
+
+    {
+      "nome": "Startrail",
+
+      "links": [
+
+{"tipo": "software","titolo": "Startrail","descrizione": "Creazione Startrail - Windows","url": "https://www.startrails.de/"},
+{"tipo": "software","titolo": "StarStax","descrizione": "Creazione Startrail - Windows, macOS","url": "http://markus-enzweiler.de/"},
+{"tipo": "software","titolo": "Star Trail Generator","descrizione": "Creazione Startrail - Linux, macOS, Windows","url": "https://github.com/Panchajanya1999/startrail"}
+
+
+
+      ]
+    }
+
+
+  ]
+}

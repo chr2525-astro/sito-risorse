@@ -1,0 +1,12 @@
+{
+  "missioni": [
+
+{"id":"v2","nome":"MW 18014","agenzia":"Wermacht - Germania","lancio":"1944/06/20","stato":"Conclusa il 20/06/1944","categoria":"Volo Suborbitale","destinazione":"Stratosfera","descrizione":"Primo manufatto costruito dall'uomo a superare la linea di Karman (100 Km di altitudine)","obiettivi":["Dimostrazione tecnologica"],"risultati":["Il missile, una V-2, raggiunse l'altitudine di circa 175 Km"],"immagine":"img/missioni/v2.jpg","sito":""},
+{"id":"sputnik1","nome":"Sputnik 1","agenzia":"Urss","lancio":"1957/10/04","stato":"Conclusa il 26/10/1957","categoria":"Satellite","destinazione":"Orbita Terrestre","descrizione":"Primo satellite artificiale in orbita terrestre","obiettivi":["Dimostrazione tecnologica"],"risultati":["Il satellite trasmise un segnale radio per 21 giorni, rimanendo in orbita per 3 mesi per disintegrarsi nell'atmosfera il 4/10/1957"],"immagine":"img/missioni/","sito":""},
+{"id":"mariner10","nome":"Mariner 10","agenzia":"Nasa","lancio":"1973/11/03","stato":"Conclusa il 24/03/1975","categoria":"Flyby","destinazione":"Mercurio","descrizione":"Prima missione ad effettuare il flyby di Venere e Mercurio","obiettivi":["Sorvolo di Venere e Mercurio","Studio del campo magnetico"],"risultati":["Flyby di Venere e 3 flyby di Mercurio","Scoperta del campo magnetico di Mercurio","Mappatura del 40% della superficie"],"immagine":"img/missioni/mariner10.jpg","sito":"https://science.nasa.gov/mission/mariner-10/"},
+{"id":"euclid","nome":"Euclid","agenzia":"Esa","lancio":"2023/07/01","stato":"In Corso - fine stimata 2029","categoria":"Telescopio Spaziale","destinazione":"Punto L2","descrizione":"Telescopio nel visibile e infrarosso","obiettivi":["Indagare sull'espansione dell'universo; distribuzione materia ordinaria e oscura nell'universo;"],"risultati":[""],"immagine":"img/missioni/","sito":""}
+
+
+
+  ]
+}

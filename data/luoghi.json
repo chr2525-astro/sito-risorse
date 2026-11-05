@@ -1,0 +1,44 @@
+{
+  "luoghi": [
+    {
+      "nome": "Roma",
+      "latitudine": 41.9028,
+      "longitudine": 12.4964
+    },
+    {
+      "nome": "Milano",
+      "latitudine": 45.4642,
+      "longitudine": 9.1900
+    },
+    {
+      "nome": "Napoli",
+      "latitudine": 40.8518,
+      "longitudine": 14.2681
+    },
+    {
+      "nome": "Torino",
+      "latitudine": 45.0703,
+      "longitudine": 7.6869
+    },
+    {
+      "nome": "Palermo",
+      "latitudine": 38.1157,
+      "longitudine": 13.3615
+    },
+    {
+      "nome": "Bologna",
+      "latitudine": 44.4949,
+      "longitudine": 11.3426
+    },
+    {
+      "nome": "Cagliari",
+      "latitudine": 39.2238,
+      "longitudine": 9.1217
+    },
+    {
+      "nome": "Venezia",
+      "latitudine": 45.4408,
+      "longitudine": 12.3155
+    }
+  ]
+}

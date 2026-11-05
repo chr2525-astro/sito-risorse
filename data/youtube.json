@@ -1,0 +1,30 @@
+{
+  "categorie": [
+
+    {
+      "nome": "Divulgazione Astronomica",
+
+      "links": [
+
+{"tipo": "youtube","titolo": "Astrowikiperri","descrizione": "Luca Perri: astorifisico e divulgatore","url": "https://www.youtube.com/@astrowikiperri/"},
+{"tipo": "youtube","titolo": "Amedeo Balbi","descrizione": "Docente di astronomia e astrofisica","url": "https://www.youtube.com/@AmedeoBalbi"}
+
+
+      ]
+    },
+
+    {
+      "nome": "Astrofotografia",
+
+      "links": [
+
+{"tipo": "youtube","titolo": "Luca Fornaciari Astrophotography","descrizione": "Fotografo professionista specializzato in astrofotografia e fotografia notturna","url": "https://www.youtube.com/@Astrofotografia"}
+
+
+      ]
+    }
+
+
+
+  ]
+}
