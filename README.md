@@ -26,7 +26,7 @@ Struttura delle cartelle/file
 ├── js/
 │   ├── allskycam.js      -- javascript per la gestione della pagina delle allskycam
 │   ├── astrofili.js      -- javascript per la gestione della pagina delle associazioni astrofili
-│   ├── coordcalc.js      -- javascript per calcolo alt/az degli oggetti astronomici nella pagina degli oggetti
+│   ├── astronomy.browser.min.js -- libreria Astronomy Engine (MIT): calcolo alt/az con precessione e rifrazione
 │   ├── gallery.js        -- javascript per la gestione della pagina galleria
 │   ├── links.js          -- javascript per la gestione delle pagine biblioteca, software, mobile, youtube
 │   ├── luoghi.js         -- javascript per la gestione dei luoghi di osservazione nella pagina degli oggetti
@@ -80,5 +80,5 @@ Struttura delle cartelle/file
 | **siti.html** | `menu.js`, `link.js` | `siti.json` |
 | **youtube.html** | `menu.js`, `link.js` | `youtube.json` |
 | **galleria.html** | `menu.js`, `gallery.js` | `gallery.json` |
-| **oggetti.html** | `menu.js`, `coordcalc.js`, `luoghi.js`, `oggetti.js` | `luoghi.json`, `oggetti.json` |
-| **oggetti_mio.html** | `menu.js`, `coordcalc.js`, `luoghi.js`, `oggetti_mio.js` | `luoghi.json`, `oggetti_mio.json` |
+| **oggetti.html** | `menu.js`, `astronomy.browser.min.js`, `luoghi.js`, `oggetti.js` | `luoghi.json`, `oggetti.json` |
+| **oggetti_mio.html** | `menu.js`, `astronomy.browser.min.js`, `luoghi.js`, `oggetti_mio.js` | `luoghi.json`, `oggetti_mio.json` |

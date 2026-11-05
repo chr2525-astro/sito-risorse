@@ -6,8 +6,10 @@
    dell'altezza nelle prossime 12 ore, apribile
    con un click sulla riga. Il grafico mostra anche
    le etichette di azimut/quadrante ogni 2 ore.
-   (il calcolo astronomico è in coordcalc.js, che deve
-   essere caricato PRIMA di questo file)
+   (il calcolo astronomico usa Astronomy Engine,
+   https://github.com/cosinekitty/astronomy,
+   caricata come js/astronomy.browser.min.js PRIMA
+   di questo file)
 ===================================================== */
 
 let skyObjects = [];
@@ -29,14 +31,8 @@ function checkDependencies() {
 
     const problems = [];
 
-    if (typeof computeAltAz !== "function") {
-        problems.push("coordcalc.js non caricato (manca computeAltAz)");
-    }
-    if (typeof formatDegrees !== "function") {
-        problems.push("coordcalc.js non caricato (manca formatDegrees)");
-    }
-    if (typeof cardinalFromAzimuth !== "function") {
-        problems.push("coordcalc.js non caricato (manca cardinalFromAzimuth)");
+    if (typeof Astronomy === "undefined" || typeof Astronomy.Horizon !== "function") {
+        problems.push("astronomy.browser.min.js non caricato (manca Astronomy)");
     }
 
     if (problems.length > 0) {
@@ -44,6 +40,133 @@ function checkDependencies() {
     }
 
     return problems;
+}
+
+/* =====================================================
+   CALCOLO ASTRONOMICO (Astronomy Engine)
+   https://github.com/cosinekitty/astronomy
+   Libreria MIT: js/astronomy.browser.min.js
+
+   Rispetto al vecchio coordcalc.js ora il calcolo
+   include precessione/nutazione (coordinate J2000
+   precesse all'equatore della data di osservazione)
+   e la rifrazione atmosferica standard.
+===================================================== */
+
+/* "00:13:12.2" oppure "00 13 12.2" oppure "00h13m12s" -> gradi */
+function parseRA(raString) {
+
+    if (!raString) return null;
+
+    const s = String(raString).trim().replace(/[hmsHMS]/g, ":").replace(/\s+/g, ":").replace(/:+/g, ":");
+
+    const parts = s.split(":").map(Number);
+
+    if (parts.some(isNaN)) return null;
+
+    const h = parts[0] || 0;
+    const m = parts[1] || 0;
+    const sec = parts[2] || 0;
+
+    return (h + m / 60 + sec / 3600) * 15;  // ore -> gradi
+}
+
+/* "+12:21:33.2" oppure "-12:21:33" oppure "12°21'33\"" -> gradi */
+function parseDEC(decString) {
+
+    if (!decString) return null;
+
+    let s = String(decString).trim().replace(/[dmsDMS'"]/g, ":").replace(/\s+/g, ":").replace(/:+/g, ":");
+
+    let sign = 1;
+
+    if (s.startsWith("-")) sign = -1;
+    if (s.startsWith("+") || s.startsWith("-")) {
+        s = s.substring(1);
+    }
+
+    const parts = s.split(":").map(Number);
+
+    if (parts.some(isNaN)) return null;
+
+    const d = Math.abs(parts[0] || 0);
+    const m = parts[1] || 0;
+    const sec = parts[2] || 0;
+
+    return sign * (d + m / 60 + sec / 3600);
+}
+
+/* =====================================================
+   CALCOLO ALTEZZA E AZIMUT
+   Restituisce { altezza: gradi, azimut: gradi, valido: bool }
+   oppure { valido: false } se i dati sono insufficienti.
+   Azimut: 0 = Nord, cresce verso Est.
+   Rifrazione atmosferica standard inclusa.
+===================================================== */
+
+function computeAltAz(raString, decString, date, latitudeDeg, longitudeDeg) {
+
+    const ra = parseRA(raString);
+    const dec = parseDEC(decString);
+
+    if (ra === null || dec === null) return { valido: false };
+    if (date === null || isNaN(date.getTime())) return { valido: false };
+    if (isNaN(latitudeDeg) || isNaN(longitudeDeg)) return { valido: false };
+
+    const time = Astronomy.MakeTime(date);
+    const observer = new Astronomy.Observer(latitudeDeg, longitudeDeg, 0);
+
+    // Precessione delle coordinate J2000 all'equatore della data (EQD)
+    const vec2000 = Astronomy.VectorFromSphere(
+        { lat: dec, lon: ra, dist: 1 },
+        time
+    );
+
+    const vecDate = Astronomy.RotateVector(
+        Astronomy.Rotation_EQJ_EQD(time),
+        vec2000
+    );
+
+    const sphereDate = Astronomy.SphereFromVector(vecDate);
+
+    // Coordinate orizzontali (RA in ore siderali)
+    const hor = Astronomy.Horizon(
+        time,
+        observer,
+        sphereDate.lon / 15,
+        sphereDate.lat,
+        "normal"
+    );
+
+    let azNorm = ((hor.azimuth % 360) + 360) % 360;
+
+    return {
+        valido: true,
+        altezza: hor.altitude,
+        azimut: azNorm,
+        sottoOrizzonte: hor.altitude < 0
+    };
+}
+
+/* =====================================================
+   FORMATTAZIONE
+===================================================== */
+
+function formatDegrees(value, decimals) {
+
+    if (value === null || value === undefined || isNaN(value)) return "";
+
+    return value.toFixed(decimals) + "°";
+}
+
+/* Direzione cardinale dall'azimut (N, NE, E, SE, S, SO, O, NO) */
+function cardinalFromAzimuth(az) {
+
+    const direzioni = ["N", "NE", "E", "SE", "S", "SO", "O", "NO"];
+
+    const index = Math.round(((az % 360) + 360) % 360 / 45) % 8;
+
+    return direzioni[index];
 }
 
 /* =====================================================
