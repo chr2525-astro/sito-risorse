@@ -329,7 +329,7 @@ function getObservationParams() {
         return { attivo: false };
     }
 
-    const date = new Date(`${dateValue}T${timeValue}`);
+    const date = new Date(`${dateValue}T${timeValue}Z`);   // input interpretato come UTC
 
     if (isNaN(date.getTime())) {
         return { attivo: false };
@@ -483,7 +483,9 @@ const CHART_STEPS = 96;   // campioni (ogni 7,5 minuti)
 const AZ_EVERY = 2;       // etichetta azimut ogni 2 ore
 
 function formatTimeHHMM(date) {
-    return date.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" });
+    const h = String(date.getUTCHours()).padStart(2, "0");
+    const m = String(date.getUTCMinutes()).padStart(2, "0");
+    return h + ":" + m + " UTC";
 }
 
 function buildAltitudeChart(obj, obs) {
@@ -747,7 +749,7 @@ function renderTable() {
             text += ` — Altezza/Azimut calcolati per: ${obs.luogo}`;
             text += ` — Clicca su una riga per il grafico delle prossime ${CHART_HOURS} ore`;
         } else {
-            text += ` — Inserisci data, ora e luogo per calcolare altezza e azimut`;
+            text += ` — Inserisci data, ora (UTC) e luogo per calcolare altezza e azimut`;
         }
 
         count.textContent = text;
