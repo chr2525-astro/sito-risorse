@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Satelliti Artificiali</title>
+
+    <meta name="description"
+          content="Statistiche e informazioni sui satelliti artificiali in orbita terrestre.">
+
+
+<!-- Font Awesome -->
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+<!-- CSS sito -->
+
+<link rel="stylesheet"
+href="css/style.css">
+
+
+<!-- Chart.js -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		  
+		  
+
+</head>
+
+<body>
+
+    <!-- =====================================
+         HEADER
+    ====================================== -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <div class="logo">
+                <i class="fa-solid fa-star"></i>
+                AstroRisorse
+            </div>
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="index.html">
+                        <i class="fa-solid fa-house"></i>
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="biblioteca.html">
+                        <i class="fa-solid fa-book"></i>
+                        Biblioteca
+                    </a>
+                </li>
+
+                <li>
+                    <a href="software.html">
+                        <i class="fa-solid fa-desktop"></i>
+                        Software
+                    </a>
+                </li>
+
+                <li>
+                    <a href="mobile.html">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                        Apps
+                    </a>
+                </li>
+
+                <li>
+                    <a href="siti.html">
+                        <i class="fa-solid fa-globe"></i>
+                        Siti
+                    </a>
+                </li>
+
+                <li>
+                    <a href="youtube.html">
+                        <i class="fa-brands fa-youtube"></i>
+                        YouTube
+                    </a>
+                </li>
+
+                <li>
+                    <a href="galleria.html">
+                        <i class="fa-solid fa-images"></i>
+                        Galleria
+                    </a>
+                </li>
+
+                <li>
+                    <a href="oggetti.html">
+                        <i class="fa-solid fa-list"></i>
+                        Oggetti
+                    </a>
+                </li>
+
+                <li>
+                    <a href="satelliti.html">
+                        <i class="fa-solid fa-satellite"></i>
+                        Satelliti
+                    </a>
+                </li>
+
+                <li>
+                    <a href="missioni.html">
+                        <i class="fa-solid fa-rocket"></i>
+                        Missioni
+                    </a>
+                </li>
+
+                <li>
+                    <a href="allskycam.html">
+                        <i class="fa-solid fa-camera"></i>
+                        AllSkyCam
+                    </a>
+                </li>
+
+                <li>
+                    <a href="astrofili.html">
+                        <i class="fa-solid fa-flag"></i>
+                        Astrofili
+                    </a>
+                </li>
+            </ul>
+
+            <div class="hamburger">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+        </nav>
+
+    </header>
+
+    <!-- =====================================
+         CONTENUTO
+    ====================================== -->
+
+    <main>
+
+        <!-- INTRODUZIONE -->
+
+        <section class="page-header">
+
+            <h1>
+
+                <i class="fa-solid fa-satellite"></i>
+
+                Satelliti Artificiali
+
+            </h1>
+
+
+        </section>
+		
+        <section class="content-section">
+
+            <div class="container">
+
+                <p>
+                I satelliti artificiali sono oggetti costruiti dall'uomo e posti in orbita attorno alla Terra 
+                oppure un altro corpo celeste. Ad oggi i satelliti artificiali sono migliaia e forniscono diversi 
+                tipi di servizi come GPS, telecomunicazioni globali, monitoraggio climatico, osservazione astronomica.
+                Qui riporto alcune mie elaborazioni ottenute dai dati messi a disposizione del sito https://planet4589.org/
+                </p>
+
+            </div>
+
+        </section>
+		
+		
+		
+
+        <!-- DESCRIZIONE -->
+
+        <section class="content-section">
+
+            <div class="container">
+
+                <h2>Lanci eseguiti fino a settembre 2026 </h2>
+
+                <p>
+                    A fine settembre 2026 sono stati eseguiti <strong>75988 lanci</strong>. Nel grafico sottostante riporto la suddivisione per anno. Da notare il numero notevole di lanci dagli anni 50 agli anni 90. 
+                </p>
+
+                <p>
+                    Questo numero elevato di lanci era relativo al lancio di satelliti meteorologici: si lanciava un razzo con strumenti meteorologici che ricadeva poco dopo sulla Terra, portando i dati utili per le previsioni del tempo. Con l'introduzione 
+                    dei satelliti meteorologici in orbita, questo tipo di lanci è andato via via diminuendo
+                </p>
+
+
+            </div>
+
+        </section>
+
+        <!-- GRAFICO 1 -->
+
+        <section class="chart-section">
+
+            <h2>
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                Lanci eseguiti per anno
+
+            </h2>
+
+            <div class="chart-container">
+
+                <canvas id="yearChart"></canvas>
+
+            </div>
+
+        </section>
+		
+
+        <section class="content-section">
+
+            <div class="container">
+
+                <h2>Satelliti artificiali attualmente in orbita</h2>
+
+                <p>
+                    Sempre a fine settembre 2026 ci sono <strong>34301</strong> manufatti creati dall'uomo in orbita attorno alla Terra.
+                </p>
+
+                <p>
+                    Parlo di manufatti in quanto questi manufatti possono essere così suddivisi:
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- GRAFICO 2 -->
+
+        <section class="chart-section">
+
+            <h2>
+
+                <i class="fa-solid fa-chart-pie"></i>
+
+
+                Tipologia Manufatto
+
+            </h2>
+
+            <div class="chart-container">
+
+                <canvas id="manufattoChart"></canvas>
+
+            </div>
+
+        </section>
+
+        <section class="content-section">
+
+            <div class="container">
+
+                <h2>Tipi di satelliti artificiali in base all'orbita</h2>
+
+                <p>
+                    <strong>LEO</strong> (Low Earth Orbit): fino a circa 2.000 km.
+                </p>
+
+                <p>
+                    <strong>MEO</strong> (Medium Earth Orbit): tra 2.000 e 35.786 km.
+                </p>
+
+                <p>
+                       <strong>GEO</strong> (Geostationary Orbit): 35.786 km.
+                </p>
+				
+                <p>
+                       <strong>HEO</strong> (Highly Elliptical Orbit): orbite fortemente ellittiche.
+                </p>				
+
+            </div>
+
+        </section>
+		
+        <!-- GRAFICO 3 -->
+
+        <section class="chart-section">
+
+            <h2>
+
+                <i class="fa-solid fa-chart-column"></i>
+
+                Distribuzione per orbita
+
+            </h2>
+
+            <div class="chart-container">
+
+                <canvas id="orbitChart"></canvas>
+
+            </div>
+
+        </section>
+
+        <!-- INFORMAZIONI -->
+<!--
+        <section class="content-section">
+
+            <div class="container">
+
+                <h2>Tipologie di orbita</h2>
+
+                <ul>
+
+                    <li>
+                        <strong>LEO</strong>
+                        (Low Earth Orbit):
+                        fino a circa 2.000 km.
+                    </li>
+
+                    <li>
+                        <strong>MEO</strong>
+                        (Medium Earth Orbit):
+                        tra 2.000 e 35.786 km.
+                    </li>
+
+                    <li>
+                        <strong>GEO</strong>
+                        (Geostationary Orbit):
+                        35.786 km.
+                    </li>
+
+                    <li>
+                        <strong>HEO</strong>
+                        (Highly Elliptical Orbit):
+                        orbite fortemente ellittiche.
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </section>
+-->
+    </main>
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
+
+    <footer>
+        <p>
+            © 2026 AstroRisorse
+        </p>
+        <p>
+            Contatti - <a href="mailto:tnwebcam@gmail.com" style="color: #ffffff !important; text-decoration: none !important;">tnwebcam@gmail.com</a>
+        </p>
+    </footer>
+
+    <!-- =====================================
+         SCRIPT
+    ====================================== -->
+
+    <script src="js/menu.js"></script>
+
+    <script src="js/satellites.js"></script>
+
+</body>
+
+</html>
+

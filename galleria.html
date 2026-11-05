@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Galleria Astronomica</title>
+
+    <meta name="description"
+          content="Galleria fotografica astronomica con immagini ad alta risoluzione.">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+</head>
+
+<body>
+
+<!-- =====================================
+     HEADER
+     ===================================== -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <div class="logo">
+                <i class="fa-solid fa-star"></i>
+                AstroRisorse
+            </div>
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="index.html">
+                        <i class="fa-solid fa-house"></i>
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="biblioteca.html">
+                        <i class="fa-solid fa-book"></i>
+                        Biblioteca
+                    </a>
+                </li>
+
+                <li>
+                    <a href="software.html">
+                        <i class="fa-solid fa-desktop"></i>
+                        Software
+                    </a>
+                </li>
+
+                <li>
+                    <a href="mobile.html">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                        Apps
+                    </a>
+                </li>
+
+                <li>
+                    <a href="siti.html">
+                        <i class="fa-solid fa-globe"></i>
+                        Siti
+                    </a>
+                </li>
+
+                <li>
+                    <a href="youtube.html">
+                        <i class="fa-brands fa-youtube"></i>
+                        YouTube
+                    </a>
+                </li>
+
+                <li>
+                    <a href="galleria.html">
+                        <i class="fa-solid fa-images"></i>
+                        Galleria
+                    </a>
+                </li>
+
+                <li>
+                    <a href="oggetti.html">
+                        <i class="fa-solid fa-list"></i>
+                        Oggetti
+                    </a>
+                </li>
+
+                <li>
+                    <a href="satelliti.html">
+                        <i class="fa-solid fa-satellite"></i>
+                        Satelliti
+                    </a>
+                </li>
+
+                <li>
+                    <a href="missioni.html">
+                        <i class="fa-solid fa-rocket"></i>
+                        Missioni
+                    </a>
+                </li>
+
+                <li>
+                    <a href="allskycam.html">
+                        <i class="fa-solid fa-camera"></i>
+                        AllSkyCam
+                    </a>
+                </li>
+
+                <li>
+                    <a href="astrofili.html">
+                        <i class="fa-solid fa-flag"></i>
+                        Astrofili
+                    </a>
+                </li>
+            </ul>
+
+            <div class="hamburger">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+        </nav>
+
+    </header>
+
+<!-- =====================================
+     CONTENUTO
+     ===================================== -->
+
+    <main>
+
+        <section class="page-header">
+
+            <h1>
+
+                <i class="fa-solid fa-images"></i>
+
+                Immagini
+
+            </h1>
+<!--
+            <p>
+
+                Raccolta di immagini astronomiche ad alta
+                risoluzione provenienti da osservatori,
+                telescopi e attività di astrofotografia.
+
+            </p>
+-->
+
+</section>
+        <section class="content-section">
+
+            <div class="container">
+
+<!--                <h2>Piccola raccolta immagini</h2> -->
+
+                <p>Una raccolta di immagini, storiche, curiose, particolari o semplicemente affascinanti divise per categoria.</p>
+
+<!--
+                <p>
+                    Tutti i dati vengono caricati
+                    automaticamente dal file
+                    <strong>data/biblioteca.json</strong>
+                </p>
+-->
+            </div>
+
+
+        </section>
+		
+<!-- 2026 -->
+
+<section class="gallery-filters">
+    <div class="filter-container">
+        <label for="categoryFilter">
+            <i class="fa-solid fa-filter"></i>
+            Filtra per categoria:
+        </label>
+        <select id="categoryFilter" class="category-select">
+            <option value="all">Tutte le categorie</option>
+        </select>
+    </div>
+</section>
+		
+
+<!-- =====================================
+     GALLERIA
+     ===================================== -->
+
+        <section>
+
+            <div id="gallery"
+                 class="gallery-grid">
+
+                <!-- Generato da gallery.js -->
+
+            </div>
+
+        </section>
+
+<!-- =====================================
+     PAGINAZIONE
+     ===================================== -->
+
+        <section>
+
+            <div id="pagination"
+                 class="pagination">
+
+            </div>
+
+        </section>
+
+    </main>
+
+<!-- =====================================
+     LIGHTBOX
+     ===================================== -->
+
+    <div id="lightbox"
+         class="lightbox"
+         aria-hidden="true">
+
+        <button id="closeLightbox"
+                class="lightbox-close"
+                aria-label="Chiudi immagine">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+        <img id="lightboxImg"
+             src=""
+             alt="Immagine astronomica ad alta risoluzione">
+
+        <div id="lightboxCaption"
+             class="lightbox-caption">
+
+        </div>
+
+    </div>
+
+<!-- =====================================
+     FOOTER
+     ===================================== -->
+
+    <footer>
+        <p>
+            © 2026 AstroRisorse
+        </p>
+        <p>
+            Contatti - <a href="mailto:tnwebcam@gmail.com" style="color: #ffffff !important; text-decoration: none !important;">tnwebcam@gmail.com</a>
+        </p>
+    </footer>
+
+<!-- =====================================
+     SCRIPT
+     ===================================== -->
+
+    <script src="js/menu.js"></script>
+
+    <script src="js/gallery.js"></script>
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                loadGallery();
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

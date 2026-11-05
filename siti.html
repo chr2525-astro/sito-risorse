@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Siti Astronomici</title>
+
+    <meta name="description"
+          content="Raccolta di siti web astronomici dedicati all'osservazione del cielo, all'astrofotografia e alla divulgazione scientifica.">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+</head>
+
+<body>
+
+    <!-- =====================================
+         HEADER
+    ====================================== -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <div class="logo">
+                <i class="fa-solid fa-star"></i>
+                AstroRisorse
+            </div>
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="index.html">
+                        <i class="fa-solid fa-house"></i>
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="biblioteca.html">
+                        <i class="fa-solid fa-book"></i>
+                        Biblioteca
+                    </a>
+                </li>
+
+                <li>
+                    <a href="software.html">
+                        <i class="fa-solid fa-desktop"></i>
+                        Software
+                    </a>
+                </li>
+
+                <li>
+                    <a href="mobile.html">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                        Apps
+                    </a>
+                </li>
+
+                <li>
+                    <a href="siti.html">
+                        <i class="fa-solid fa-globe"></i>
+                        Siti
+                    </a>
+                </li>
+
+                <li>
+                    <a href="youtube.html">
+                        <i class="fa-brands fa-youtube"></i>
+                        YouTube
+                    </a>
+                </li>
+
+                <li>
+                    <a href="galleria.html">
+                        <i class="fa-solid fa-images"></i>
+                        Galleria
+                    </a>
+                </li>
+
+                <li>
+                    <a href="oggetti.html">
+                        <i class="fa-solid fa-list"></i>
+                        Oggetti
+                    </a>
+                </li>
+
+                <li>
+                    <a href="satelliti.html">
+                        <i class="fa-solid fa-satellite"></i>
+                        Satelliti
+                    </a>
+                </li>
+
+                <li>
+                    <a href="missioni.html">
+                        <i class="fa-solid fa-rocket"></i>
+                        Missioni
+                    </a>
+                </li>
+
+                <li>
+                    <a href="allskycam.html">
+                        <i class="fa-solid fa-camera"></i>
+                        AllSkyCam
+                    </a>
+                </li>
+
+                <li>
+                    <a href="astrofili.html">
+                        <i class="fa-solid fa-flag"></i>
+                        Astrofili
+                    </a>
+                </li>
+            </ul>
+
+            <div class="hamburger">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+        </nav>
+
+    </header>
+
+    <!-- =====================================
+         CONTENUTO
+    ====================================== -->
+
+    <main>
+
+        <section class="page-header">
+
+            <h1>
+
+                <i class="fa-solid fa-globe"></i>
+
+                Siti Astronomici
+
+            </h1>
+<!--
+            <p>
+
+                Una raccolta selezionata di siti internet
+                dedicati all'astronomia, all'astrofotografia,
+                all'esplorazione spaziale e alla divulgazione
+                scientifica.
+
+            </p>
+-->
+        </section>
+
+        <!-- =====================================
+             INTRODUZIONE
+        ====================================== -->
+
+        <section class="content-section">
+
+            <div class="container">
+
+ <!--               <h2>Risorse online per l'astronomia</h2>-->
+
+                <p>Diversi siti, divisi per categoria, che si occupano di astronomia e argomenti correlati.</p>
+
+
+            </div>
+
+        </section>
+
+        <!-- =====================================
+             ELENCO DINAMICO
+        ====================================== -->
+
+        <div id="content">
+
+            <!--
+                Contenuto generato
+                automaticamente da links.js
+            -->
+
+        </div>
+
+    </main>
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
+
+    <footer>
+        <p>
+            © 2026 AstroRisorse
+        </p>
+        <p>
+            Contatti - <a href="mailto:tnwebcam@gmail.com" style="color: #ffffff !important; text-decoration: none !important;">tnwebcam@gmail.com</a>
+        </p>
+    </footer>
+
+    <!-- =====================================
+         SCRIPT
+    ====================================== -->
+
+    <script src="js/menu.js"></script>
+
+    <script src="js/links.js"></script>
+
+    <script>
+
+        loadLinks(
+            "data/siti.json"
+        );
+
+    </script>
+
+</body>
+
+</html>
+

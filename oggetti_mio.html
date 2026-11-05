@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Oggetti del Cielo Profondo - Personale</title>
+
+    <meta name="description"
+          content="Tabella degli oggetti del cielo profondo con filtri per catalogo, tipo, magnitudine, dimensioni e calcolo di altezza e azimut.">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+</head>
+
+<body>
+
+    <!-- =====================================
+         HEADER
+    ====================================== -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <div class="logo">
+                <i class="fa-solid fa-star"></i>
+                AstroRisorse
+            </div>
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="index.html">
+                        <i class="fa-solid fa-house"></i>
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="biblioteca.html">
+                        <i class="fa-solid fa-book"></i>
+                        Biblioteca
+                    </a>
+                </li>
+
+                <li>
+                    <a href="software.html">
+                        <i class="fa-solid fa-desktop"></i>
+                        Software
+                    </a>
+                </li>
+
+                <li>
+                    <a href="mobile.html">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                        Apps
+                    </a>
+                </li>
+
+                <li>
+                    <a href="siti.html">
+                        <i class="fa-solid fa-globe"></i>
+                        Siti
+                    </a>
+                </li>
+
+                <li>
+                    <a href="youtube.html">
+                        <i class="fa-brands fa-youtube"></i>
+                        YouTube
+                    </a>
+                </li>
+
+                <li>
+                    <a href="galleria.html">
+                        <i class="fa-solid fa-images"></i>
+                        Galleria
+                    </a>
+                </li>
+
+                <li>
+                    <a href="oggetti.html">
+                        <i class="fa-solid fa-list"></i>
+                        Oggetti
+                    </a>
+                </li>
+
+                <li>
+                    <a href="satelliti.html">
+                        <i class="fa-solid fa-satellite"></i>
+                        Satelliti
+                    </a>
+                </li>
+
+                <li>
+                    <a href="missioni.html">
+                        <i class="fa-solid fa-rocket"></i>
+                        Missioni
+                    </a>
+                </li>
+
+                <li>
+                    <a href="allskycam.html">
+                        <i class="fa-solid fa-camera"></i>
+                        AllSkyCam
+                    </a>
+                </li>
+
+                <li>
+                    <a href="astrofili.html">
+                        <i class="fa-solid fa-flag"></i>
+                        Astrofili
+                    </a>
+                </li>
+            </ul>
+
+            <div class="hamburger">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+        </nav>
+
+    </header>
+
+    <!-- =====================================
+         CONTENUTO
+    ====================================== -->
+
+    <main>
+
+        <section class="page-header">
+
+            <h1>
+
+                <i class="fa-solid fa-list"></i>
+
+                Oggetti del Cielo Profondo - PERSONALE
+
+            </h1>
+
+            <p>
+
+                Tabella PERSONALE degli oggetti del cielo
+                profondo con filtri per catalogo (NGC, MES, IC,
+                CR, MEL, CAL), tipo di oggetto, magnitudine
+                fotografica, dimensioni apparenti e calcolo
+                di altezza e azimut per luogo e data di osservazione.
+
+            </p>
+
+        </section>
+
+        <!-- =====================================
+             PARAMETRI DI OSSERVAZIONE
+             (data, ora e luogo)
+        ====================================== -->
+
+        <section class="obs-params">
+
+            <div class="obs-params-grid">
+
+                <div class="filter-box">
+                    <label for="obsDate">
+                        <i class="fa-solid fa-calendar"></i>
+                        Data osservazione
+                    </label>
+                    <input type="date"
+                           id="obsDate">
+                </div>
+
+                <div class="filter-box">
+                    <label for="obsTime">
+                        <i class="fa-solid fa-clock"></i>
+                        Ora osservazione (ora locale)
+                    </label>
+                    <input type="time"
+                           id="obsTime">
+                </div>
+
+                <div class="filter-box">
+                    <label for="obsPlace">
+                        <i class="fa-solid fa-location-dot"></i>
+                        Luogo di osservazione
+                    </label>
+                    <select id="obsPlace">
+                        <option value="">Seleziona un luogo</option>
+                        <!-- Popolato da oggetti.js da luoghi.json -->
+                    </select>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================
+             FILTRI
+        ====================================== -->
+
+        <section class="object-filters">
+
+            <div class="filter-grid">
+
+                <div class="filter-box">
+                    <label for="filterCATALOGO">
+                        <i class="fa-solid fa-hashtag"></i>
+                        CATALOGO
+                    </label>
+                    <input type="text"
+                           id="filterCATALOGO"
+                           placeholder="Es. NGC7000">
+                </div>
+
+                <div class="filter-box">
+                    <label for="filterTIPO">
+                        <i class="fa-solid fa-shapes"></i>
+                        Tipo
+                    </label>
+                    <select id="filterTIPO">
+                        <option value="all">Tutti i tipi</option>
+                    </select>
+                </div>
+
+                <div class="filter-box">
+                    <label for="filterMAGFOTO">
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                        Mag. foto (max)
+                    </label>
+                    <input type="number"
+                           id="filterMAGFOTO"
+                           step="0.1"
+                           min="0"
+                           placeholder="Es. 8.5">
+                </div>
+
+                <div class="filter-box">
+                    <label for="filterDIMMAX">
+                        <i class="fa-solid fa-ruler"></i>
+                        Dim. max (max, in ')
+                    </label>
+                    <input type="number"
+                           id="filterDIMMAX"
+                           step="1"
+                           min="0"
+                           placeholder="Es. 30">
+                </div>
+
+                <div class="filter-box filter-actions">
+
+                    <button id="resetFilters" class="reset-button">
+                        <i class="fa-solid fa-rotate-left"></i>
+                        Azzera filtri
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================
+             TABELLA OGGETTI
+        ====================================== -->
+
+        <section class="table-section">
+
+            <div class="table-container">
+
+                <p id="objectCount" class="object-count"></p>
+
+                <div class="table-wrapper">
+
+                    <table id="objectTable" class="object-table">
+
+                        <thead>
+
+                            <tr>
+                                <th>CATALOGO</th>
+                                <th>Nome</th>
+                                <th>Costellazione</th>
+                                <th>Tipo</th>
+                                <th class="sortable"
+                                    data-sort="MAGFOTO"
+                                    title="Clicca per ordinare">
+                                    Mag. foto
+                                    <i class="fa-solid fa-sort sort-icon"></i>
+                                </th>
+                                <th>Mag. vis</th>
+                                <th class="sortable"
+                                    data-sort="DIMMAX"
+                                    title="Clicca per ordinare">
+                                    Dim. max
+                                    <i class="fa-solid fa-sort sort-icon"></i>
+                                </th>
+                                <th>Osservato</th>
+                                <th class="sortable"
+                                    data-sort="ALTEZZA"
+                                    title="Clicca per ordinare">
+                                    Altezza
+                                    <i class="fa-solid fa-sort sort-icon"></i>
+                                </th>
+                                <th>Azimut</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+                            <!-- Generato da oggetti.js -->
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
+
+    <footer>
+        <p>
+            © 2026 AstroRisorse
+        </p>
+        <p>
+            Contatti - <a href="mailto:tnwebcam@gmail.com" style="color: #ffffff !important; text-decoration: none !important;">tnwebcam@gmail.com</a>
+        </p>
+    </footer>
+
+    <!-- =====================================
+         SCRIPT
+    ====================================== -->
+
+    <script src="js/menu.js"></script>
+
+    <script src="js/coordcalc.js"></script>
+
+    <script src="js/oggetti_mio.js"></script>
+
+</body>
+
+</html>

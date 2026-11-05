@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AstroRisorse</title>
+    <style>
+        /* Stili Base e Sfondo Spaziale */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+            color: #ffffff;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* Effetto Stelle Luccicanti */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            opacity: 0.15;
+            mask-image: radial-gradient(white 1px, transparent 1px);
+            mask-size: 24px 24px;
+            animation: twinkle 4s infinite linear;
+            z-index: 1;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.1; }
+            50% { opacity: 0.25; }
+            100% { opacity: 0.1; }
+        }
+
+        /* Contenitore Principale */
+        .container {
+            max-width: 600px;
+            padding: 40px 20px;
+            z-index: 2;
+            position: relative;
+        }
+
+        /* Icona del Pianeta / Telescopio */
+        .icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        /* Testi */
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, #a1c4fd, #c2e9fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #b0c4de;
+            margin-bottom: 30px;
+        }
+
+        /* Barra di Progresso dell'Orbita / Lavori */
+        .progress-container {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 4px;
+            box-shadow: 0 0 10px rgba(161, 196, 253, 0.2);
+        }
+
+        .progress-bar {
+            width: 10%; /* Puoi modificare questa percentuale per indicare lo stato di avanzamento */
+            height: 12px;
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 10px;
+            box-shadow: 0 0 15px #00f2fe;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; box-shadow: 0 0 25px #00f2fe; }
+            100% { opacity: 0.8; }
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Icona a tema (un pianeta con anelli) -->
+        <div class="icon">🪐</div>
+        
+        <h1>Lavori in Corso</h1>
+        <p>Sto costruendo un sito che raccoglie alcuni argomenti che incontro da astrofilo dilettante. Torna a trovarmi presto!</p>
+        
+        <!-- Barra di caricamento -->
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+        <p>Percentuale avanzamento</p>
+        <div class="footer">
+            &copy; 2026 AstroRisorse - Cieli sereni!
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,94 +1,370 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="it">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#102a24">
-    <meta name="description" content="Una raccolta curata di strumenti, mappe e risorse per osservare il cielo.">
-    <title>Orbite — Risorse per astrofili</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <script src="app.js" defer></script>
-  </head>
-  <body>
-    <header class="topbar">
-      <a class="brand" href="#inizio" aria-label="Orbite, pagina iniziale">
-        <span class="brand-mark" aria-hidden="true">✳</span>
-        <span>orbite<span class="brand-period">.</span></span>
-      </a>
-      <nav class="top-nav" aria-label="Navigazione principale">
-        <a class="nav-link is-current" href="#catalogo">Esplora</a>
-        <a class="nav-link" href="#catalogo" data-filter-link="community">Community</a>
-        <a class="nav-link" href="#about">Il progetto</a>
-      </nav>
-      <a class="top-action" href="#catalogo">Trova una risorsa <span aria-hidden="true">↗</span></a>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AstroRisorse</title>
+
+    <meta name="description"
+          content="Portale dedicato all'astronomia con software, applicazioni, gallerie fotografiche e risorse utili.">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Foglio di stile -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- ==========================
+         HEADER
+    =========================== -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <div class="logo">
+                <i class="fa-solid fa-star"></i>
+                AstroRisorse
+            </div>
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="index.html">
+                        <i class="fa-solid fa-house"></i>
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="biblioteca.html">
+                        <i class="fa-solid fa-book"></i>
+                        Biblioteca
+                    </a>
+                </li>
+
+                <li>
+                    <a href="software.html">
+                        <i class="fa-solid fa-desktop"></i>
+                        Software
+                    </a>
+                </li>
+
+                <li>
+                    <a href="mobile.html">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                        Apps
+                    </a>
+                </li>
+
+                <li>
+                    <a href="siti.html">
+                        <i class="fa-solid fa-globe"></i>
+                        Siti
+                    </a>
+                </li>
+
+                <li>
+                    <a href="youtube.html">
+                        <i class="fa-brands fa-youtube"></i>
+                        YouTube
+                    </a>
+                </li>
+
+                <li>
+                    <a href="galleria.html">
+                        <i class="fa-solid fa-images"></i>
+                        Galleria
+                    </a>
+                </li>
+
+                <li>
+                    <a href="oggetti.html">
+                        <i class="fa-solid fa-list"></i>
+                        Oggetti
+                    </a>
+                </li>
+
+                <li>
+                    <a href="satelliti.html">
+                        <i class="fa-solid fa-satellite"></i>
+                        Satelliti
+                    </a>
+                </li>
+
+                <li>
+                    <a href="missioni.html">
+                        <i class="fa-solid fa-rocket"></i>
+                        Missioni
+                    </a>
+                </li>
+
+                <li>
+                    <a href="allskycam.html">
+                        <i class="fa-solid fa-camera"></i>
+                        AllSkyCam
+                    </a>
+                </li>
+
+                <li>
+                    <a href="astrofili.html">
+                        <i class="fa-solid fa-flag"></i>
+                        Astrofili
+                    </a>
+                </li>
+            </ul>
+
+            <div class="hamburger">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+        </nav>
+
     </header>
 
-    <main id="inizio">
-      <section class="intro" aria-labelledby="page-title">
-        <div class="intro-copy">
-          <p class="eyebrow"><span class="live-dot" aria-hidden="true"></span> IL TUO PUNTO DI PARTENZA, SOTTO LE STELLE</p>
-          <h1 id="page-title">Il cielo è grande.<br><span>Comincia da qui.</span></h1>
-          <p class="intro-text">Mappe, strumenti e comunità selezionati per chi ama guardare in alto. Meno tempo a cercare, più tempo a osservare.</p>
-          <a class="intro-link" href="#catalogo">Esplora le risorse <span aria-hidden="true">↓</span></a>
-        </div>
-        <div class="intro-visual" role="img" aria-label="Nebulosa luminosa nello spazio profondo">
-          <div class="visual-caption"><span>01 / 06</span><span>UNA FINESTRA SULL'UNIVERSO</span></div>
-          <span class="visual-star" aria-hidden="true">✳</span>
-        </div>
-        <div class="intro-index" aria-hidden="true"><span>OSSERVARE</span><span>IMPARARE</span><span>CONDIVIDERE</span></div>
-      </section>
+    <!-- ==========================
+         MAIN
+    =========================== -->
 
-      <section class="catalog" id="catalogo" aria-labelledby="catalog-title">
-        <div class="catalog-heading">
-          <div>
-            <p class="eyebrow section-eyebrow">UNA RACCOLTA IN CONTINUO MOVIMENTO</p>
-            <h2 id="catalog-title">La tua cassetta degli attrezzi</h2>
-          </div>
-          <p class="catalog-note">Risorse scelte per accompagnarti dalla prima costellazione alla prossima lunga esposizione.</p>
-        </div>
+    <main>
 
-        <div class="toolbar">
-          <div class="filters" id="category-filters" role="group" aria-label="Filtra per categoria">
-            <button class="filter-button is-active" type="button" data-category="all" aria-pressed="true">Tutte</button>
-          </div>
-          <label class="search-box">
-            <span class="search-icon" aria-hidden="true">⌕</span>
-            <span class="visually-hidden">Cerca risorse</span>
-            <input id="search" type="search" placeholder="Cerca una risorsa..." autocomplete="off">
-            <kbd>/</kbd>
-          </label>
-        </div>
+<!-- ==========================
+     HERO COMPATTO
+=========================== -->
 
-        <div class="results-line" aria-live="polite">
-          <p id="results-count">Caricamento risorse…</p>
-          <label class="sort-control" for="sort">Ordina per
-            <select id="sort">
-              <option value="featured">Selezione</option>
-              <option value="name">Nome A–Z</option>
-            </select>
-          </label>
-        </div>
+<section class="hero-minimal">
 
-        <div class="resource-grid" id="resource-grid" aria-live="polite" aria-busy="true"></div>
-        <div class="empty-state" id="empty-state" hidden>
-          <span aria-hidden="true">☄</span>
-          <h3>Nessuna risorsa trovata</h3>
-          <p>Prova a cambiare ricerca o categoria.</p>
-          <button class="reset-button" id="reset-filters" type="button">Azzera filtri</button>
-        </div>
-        <div class="load-error" id="load-error" hidden>
-          <p>Non riesco a caricare le risorse. Avvia il sito tramite un server locale e riprova.</p>
-        </div>
-      </section>
+        <section class="page-header">
+
+            <h1>
+
+                <i class="fa-solid fa-globe"></i>
+
+                Risorse sparse per Astrofili
+
+            </h1>
+
+
+        </section>
+
+
+        <section class="content-section">
+
+            <div class="container">
+
+ <!--               <h2>Risorse online per l'astronomia</h2>-->
+
+                <p>Sono un astrofilo dilettante e con il tempo ho raccolto del materiale di vario genere. Nel tentativo di organizzare il tutto ho ottenuto questo sito.</p>
+                <p>Al momento il sito è abbozzato come struttura, prossimamente inizierò ad aggiungere contenuti nell diverse sezioni, in base al tempo a disposizione</p>
+                <p>Sezioni attualmente presenti:</p>
+
+                <ul>
+
+                    <li>Biblioteca: raccolta di manuali, cataloghi astronomici, e altro</li>
+                    <li>Software: software per pc</li>
+                    <li>Apps: applicazioni per mobile - abbozzato</li>
+                    <li>Siti: siti web divisi per tipologia - abbozzato</li>
+                    <li>YouTube: canali YouTube di vari argomenti - abbozzato</li>
+                    <li>Galleria: elenco di immagini recuperate dal web - abbozzato</li>
+                    <li>Oggetti: catalogo interattivo dei principalie oggetti astronomici deep sky</li>
+                    <li>Satelliti: qualche info statistica sui satelliti artificiali - abbozzato</li>
+                    <li>Missioni: principali missioni di esplorazione spaziale - abbozzato</li>
+                    <li>AllSkyCam: elenco delle AllSkyCam presenti in Italia - abbozzato</li>
+                    <li>Astrofili: elenco delle associazioni di Astrofili presenti in Italia - abbozzato</li>
+
+
+
+                </ul>
+
+
+
+            </div>
+
+        </section>
+
+
+
+</section>
+
+<!-- SCHEDE CON IFRAME -->
+
+<!-- inizio blocco
+        
+
+        <section class="cards">
+
+           
+
+            <article class="card">
+
+                <h3>
+                    <i class="fa-solid fa-star"></i>
+                    Aurora Forecast
+                </h3>
+
+                <iframe
+                    src="https://services.swpc.noaa.gov/images/aurora-forecast-northern-hemisphere.jpg" 
+                    title="Aurora Forecast"
+                    loading="lazy">
+                </iframe>
+
+                <div class="card-content">
+                    <p>
+            
+						<a href="https://www.spaceweather.com/" target="_blank"> Possibilita' aurora boreale in europa!!! </a>
+                    </p>
+                </div>
+
+            </article>
+
+            
+
+            <article class="card">
+
+                <h3>
+                    <i class="fa-solid fa-satellite"></i>
+                    Heavens Above
+                </h3>
+
+                <iframe
+                    src="https://www.heavens-above.com/"
+                    title="Heavens Above"
+                    loading="lazy">
+                </iframe>
+
+                <div class="card-content">
+                    <p>
+                        Informazioni sui passaggi di satelliti e ISS.
+                    </p>
+                </div>
+
+            </article>
+
+            
+
+            <article class="card">
+
+                <h3>
+                    <i class="fa-solid fa-rocket"></i>
+                    NASA
+                </h3>
+
+                <iframe
+                    src="https://www.nasa.gov/"
+                    title="NASA"
+                    loading="lazy">
+                </iframe>
+
+                <div class="card-content">
+                    <p>
+                        Ultime notizie e missioni dell'agenzia spaziale americana.
+                    </p>
+                </div>
+
+            </article>
+
+            
+
+            <article class="card">
+
+                <h3>
+                    <i class="fa-solid fa-earth-europe"></i>
+                    ESA
+                </h3>
+
+                <iframe
+                    src="https://www.esa.int/"
+                    title="ESA"
+                    loading="lazy">
+                </iframe>
+
+                <div class="card-content">
+                    <p>
+                        Agenzia Spaziale Europea e missioni scientifiche.
+                    </p>
+                </div>
+
+            </article>
+
+            
+
+            <article class="card">
+
+                <h3>
+                    <i class="fa-solid fa-camera"></i>
+                    APOD
+                </h3>
+
+                <iframe
+                    src="https://apod.nasa.gov/apod/"
+                    title="Astronomy Picture of the Day"
+                    loading="lazy">
+                </iframe>
+
+                <div class="card-content">
+                    <p>
+                        Astronomy Picture of the Day della NASA.
+                    </p>
+                </div>
+
+            </article>
+
+            
+
+            <article class="card">
+
+                <h3>
+                    <i class="fa-solid fa-sun"></i>
+                    Space Weather
+                </h3>
+
+                <iframe
+                    src="https://www.spaceweather.com/"
+                    title="Space Weather"
+                    loading="lazy">
+                </iframe>
+
+                <div class="card-content">
+                    <p>
+                        Attività solare e previsioni meteorologiche spaziali.
+                    </p>
+                </div>
+
+            </article>
+
+        </section>
+		
+fine blocco		 -->
+
     </main>
 
-    <footer class="footer" id="about">
-      <a class="brand footer-brand" href="#inizio"><span class="brand-mark" aria-hidden="true">✳</span><span>orbite<span class="brand-period">.</span></span></a>
-      <p>Fatto per chi, ogni tanto, alza gli occhi.</p>
-      <span class="footer-note">UNA MAPPA, NON UN CONFINE <span aria-hidden="true">✳</span></span>
+    <!-- ==========================
+         FOOTER
+    =========================== -->
+
+    <footer>
+        <p>
+            © 2026 AstroRisorse
+        </p>
+        <p>
+            Contatti - <a href="mailto:tnwebcam@gmail.com" style="color: #ffffff !important; text-decoration: none !important;">tnwebcam@gmail.com</a>
+        </p>
     </footer>
-  </body>
+
+    <!-- ==========================
+         JAVASCRIPT
+    =========================== -->
+
+    <script src="js/menu.js"></script>
+
+</body>
+
 </html>
+
