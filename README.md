@@ -15,6 +15,7 @@ Struttura delle cartelle/file
 ├── mobile.html           -- pagina con app per mobile
 ├── oggetti.html          -- pagina con elenco oggetti astronomici con coordinate e visibilità
 ├── oggetti_mio.html      -- pagina con elenco oggetti astronomici con coordinate e visibilità - PERSONALE pagina non pubblicata
+├── osservazione.html     -- pagina "Stasera si osserva?": condizioni di osservazione (buio, Luna, meteo, attività solare)
 ├── satelliti.html        -- pagina con grafici satelliti in orbita
 ├── siti.html             -- pagina con siti 
 ├── software.html         -- pagina con programmi per pc
@@ -34,6 +35,7 @@ Struttura delle cartelle/file
 │   ├── missioni.js       -- javascript per la gestione della pagina delle missioni
 │   ├── oggetti.js        -- javascript per la gestione della pagina degli oggetti
 │   ├── oggetti_mio.js    -- javascript per la gestione della pagina degli oggetti PERSONALI
+│   ├── osservazione.js   -- javascript per la gestione della pagina delle condizioni di osservazione
 │   └── satellites.js     -- javascript per la gestione della pagina dei satelliti
 │
 ├── data/
@@ -58,7 +60,7 @@ Struttura delle cartelle/file
 │   └── missioni/         -- immagini per pagina missioni.html
 │
 ├── files/                -- documenti presentati dalla pagina biblioteca memorizzati in locale
-│   └── backup/           -- copia di sicurezza dei documenti presentati nella pagina biblioteca, anche di quelli attualmente reperibili in rete
+│   └── backup/           -- copia di sicurezza dei documenti presentati dalla pagina biblioteca, anche di quelli attualmente reperibili in rete
 │
 └── README.txt            -- questo file
 ```
@@ -82,3 +84,15 @@ Struttura delle cartelle/file
 | **galleria.html** | `menu.js`, `gallery.js` | `gallery.json` |
 | **oggetti.html** | `menu.js`, `astronomy.browser.min.js`, `luoghi.js`, `oggetti.js` | `luoghi.json`, `oggetti.json` |
 | **oggetti_mio.html** | `menu.js`, `astronomy.browser.min.js`, `luoghi.js`, `oggetti_mio.js` | `luoghi.json`, `oggetti_mio.json` |
+| **osservazione.html** | `menu.js`, `astronomy.browser.min.js`, `osservazione.js` | `luoghi.json` |
+
+---
+
+## Note sulla pagina osservazione.html
+
+La pagina "Stasera si osserva?" recupera i dati da servizi esterni direttamente dal browser dell'utente:
+
+- **Open-Meteo** (`https://api.open-meteo.com`) — previsioni orarie serali: nuvolosità, probabilità di pioggia, umidità, vento, visibilità. Servizio gratuito, senza chiave API.
+- **NOAA SWPC** (`https://services.swpc.noaa.gov`) — indice geomagnetico Kp, regioni attive del Sole, numero di macchie solari ed eventi di brillamento (classi C/M/X).
+
+Data e luogo osservazione sono valorizzati di default (luogo: primo elemento di `data/luoghi.json`, data: giorno corrente in ora italiana) e modificabili dall'utente.

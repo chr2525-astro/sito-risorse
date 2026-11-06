@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Osservazione - AstroRisorse</title>
+
+    <meta name="description"
+          content="Condizioni di osservazione per la serata: buio astronomico, luna, meteo e attività solare.">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Foglio di stile -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Stili specifici della pagina -->
+    <style>
+        /* barra parametri in cima */
+        .obs-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            align-items: center;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.4rem;
+        }
+
+        .obs-controls label {
+            font-weight: 500;
+            color: var(--muted);
+            font-size: .9rem;
+        }
+
+        .obs-controls input,
+        .obs-controls select {
+            padding: .45rem .6rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+        }
+
+        .obs-coords {
+            color: var(--muted);
+            font-size: .9rem;
+            margin-left: auto;
+        }
+
+        /* card generiche */
+        .obs-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.2rem 1.4rem;
+            margin-bottom: 1.4rem;
+        }
+
+        .obs-card h2 {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: .8rem;
+        }
+
+        .obs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.4rem;
+        }
+
+        @media (max-width: 800px) {
+            .obs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* verdetto */
+        .verdict {
+            display: flex;
+            gap: 1.6rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .score-ring {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            flex-shrink: 0;
+            border: 8px solid #ccc;
+        }
+
+        .score-ring .val {
+            font-size: 1.5rem;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .score-ring .lab {
+            font-size: .7rem;
+            color: var(--muted);
+        }
+
+        .verdict-text {
+            flex: 1;
+            min-width: 240px;
+        }
+
+        .verdict-text h3 {
+            font-size: 1.3rem;
+            margin-bottom: .3rem;
+        }
+
+        .verdict-text ul {
+            list-style: none;
+            margin-top: .5rem;
+        }
+
+        .verdict-text li {
+            padding: .15rem 0;
+            color: var(--text);
+        }
+
+        .verdict-text li i {
+            color: var(--primary);
+            width: 1.3rem;
+            text-align: center;
+        }
+
+        /* timeline cielo */
+        .sky-item {
+            display: flex;
+            justify-content: space-between;
+            padding: .45rem 0;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .sky-item:last-child {
+            border-bottom: none;
+        }
+
+        .sky-item .t {
+            font-weight: bold;
+            color: var(--secondary);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .sky-note {
+            margin-top: .6rem;
+            font-size: .9rem;
+            color: var(--muted);
+        }
+
+        /* barre meteo */
+        .meteo-row {
+            display: grid;
+            grid-template-columns: 3.2rem 1fr 3.4rem;
+            gap: .6rem;
+            align-items: center;
+            padding: .18rem 0;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .meteo-row .hh {
+            color: var(--muted);
+            font-size: .85rem;
+        }
+
+        .meteo-bar-track {
+            background: #e8ecf1;
+            border-radius: 6px;
+            height: 12px;
+            overflow: hidden;
+        }
+
+        .meteo-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4caf50, #ff9800, #f44336);
+            border-radius: 6px;
+        }
+
+        .meteo-row .vv {
+            text-align: right;
+            font-size: .85rem;
+        }
+
+        .meteo-extra {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            margin-top: .8rem;
+            font-size: .9rem;
+            color: var(--text);
+        }
+
+        .meteo-extra span i {
+            color: var(--primary);
+            margin-right: .3rem;
+        }
+
+        /* attività solare */
+        .sun-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .sun-stat {
+            background: var(--light);
+            border-radius: 8px;
+            padding: .8rem 1rem;
+            text-align: center;
+        }
+
+        .sun-stat .big {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        .sun-stat .cap {
+            font-size: .8rem;
+            color: var(--muted);
+        }
+
+        .kp-track {
+            background: linear-gradient(90deg, #4caf50 0%, #4caf50 40%, #ff9800 60%, #f44336 80%);
+            border-radius: 6px;
+            height: 10px;
+            margin: .5rem auto 0;
+            position: relative;
+            max-width: 160px;
+        }
+
+        .kp-thumb {
+            position: absolute;
+            top: -4px;
+            width: 6px;
+            height: 18px;
+            background: var(--dark);
+            border-radius: 3px;
+        }
+
+        .sun-note {
+            margin-top: .8rem;
+            font-size: .9rem;
+            color: var(--muted);
+        }
+
+        .obs-na {
+            color: var(--muted);
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ==========================
+         HEADER
+    =========================== -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <div class="logo">
+                <i class="fa-solid fa-star"></i>
+                AstroRisorse
+            </div>
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="index.html">
+                        <i class="fa-solid fa-house"></i>
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="biblioteca.html">
+                        <i class="fa-solid fa-book"></i>
+                        Biblioteca
+                    </a>
+                </li>
+
+                <li>
+                    <a href="software.html">
+                        <i class="fa-solid fa-desktop"></i>
+                        Software
+                    </a>
+                </li>
+
+                <li>
+                    <a href="mobile.html">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                        Apps
+                    </a>
+                </li>
+
+                <li>
+                    <a href="siti.html">
+                        <i class="fa-solid fa-globe"></i>
+                        Siti
+                    </a>
+                </li>
+
+                <li>
+                    <a href="youtube.html">
+                        <i class="fa-brands fa-youtube"></i>
+                        YouTube
+                    </a>
+                </li>
+
+                <li>
+                    <a href="galleria.html">
+                        <i class="fa-solid fa-images"></i>
+                        Galleria
+                    </a>
+                </li>
+
+                <li>
+                    <a href="oggetti.html">
+                        <i class="fa-solid fa-list"></i>
+                        Oggetti
+                    </a>
+                </li>
+
+                <li>
+                    <a href="satelliti.html">
+                        <i class="fa-solid fa-satellite"></i>
+                        Satelliti
+                    </a>
+                </li>
+
+                <li>
+                    <a href="missioni.html">
+                        <i class="fa-solid fa-rocket"></i>
+                        Missioni
+                    </a>
+                </li>
+
+                <li>
+                    <a href="allskycam.html">
+                        <i class="fa-solid fa-camera"></i>
+                        AllSkyCam
+                    </a>
+                </li>
+
+                <li>
+                    <a href="astrofili.html">
+                        <i class="fa-solid fa-flag"></i>
+                        Astrofili
+                    </a>
+                </li>
+
+            </ul>
+
+            <div class="hamburger">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+        </nav>
+
+    </header>
+
+    <!-- ==========================
+         MAIN
+    =========================== -->
+
+    <main>
+
+        <section class="hero-minimal">
+
+            <section class="page-header">
+
+                <h1>
+                    <i class="fa-solid fa-binoculars"></i>
+                    Stasera si osserva?
+                </h1>
+
+            </section>
+
+            <section class="content-section">
+
+                <div class="container">
+
+                    <p>
+                        Riepilogo delle condizioni di osservazione per la serata scelta:
+                        orari di tramonto, buio astronomico, sorgere/tramonto e fase della Luna,
+                        meteo serale e attività solare.
+                        Gli orari sono in ora italiana (Europe/Rome).
+                    </p>
+
+                    <!-- PARAMETRI -->
+                    <div class="obs-controls">
+                        <div>
+                            <label for="obsDate">Data</label><br>
+                            <input type="date" id="obsDate">
+                        </div>
+                        <div>
+                            <label for="obsPlace">Luogo</label><br>
+                            <select id="obsPlace"></select>
+                        </div>
+                        <div class="obs-coords" id="obsCoords"></div>
+                    </div>
+
+                    <!-- VERDETTO -->
+                    <div class="obs-card" id="verdictCard">
+                        <h2><i class="fa-solid fa-star"></i> Verdetto della serata</h2>
+                        <div class="verdict">
+                            <div class="score-ring" id="scoreRing">
+                                <span class="val">–</span>
+                                <span class="lab">/ 100</span>
+                            </div>
+                            <div class="verdict-text">
+                                <h3 id="verdictTitle">Calcolo in corso…</h3>
+                                <ul id="verdictReasons"></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="obs-grid">
+
+                        <!-- CIELO E LUNA -->
+                        <div class="obs-card">
+                            <h2><i class="fa-solid fa-moon"></i> Cielo e Luna</h2>
+                            <div id="skyList">
+                                <p class="obs-na">Calcolo in corso…</p>
+                            </div>
+                            <div class="sky-note" id="skyNote"></div>
+                        </div>
+
+                        <!-- METEO -->
+                        <div class="obs-card">
+                            <h2><i class="fa-solid fa-cloud"></i> Meteo serale (18:00–03:00)</h2>
+                            <div id="meteoList">
+                                <p class="obs-na">Caricamento dati meteo…</p>
+                            </div>
+                            <div class="meteo-extra" id="meteoExtra"></div>
+                            <div class="sky-note" id="meteoNote">
+                                Dati: <a href="https://open-meteo.com/" target="_blank">Open-Meteo</a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- ATTIVITA' SOLARE -->
+                    <div class="obs-card">
+                        <h2><i class="fa-solid fa-sun"></i> Attività solare</h2>
+                        <div class="sun-grid" id="sunGrid">
+                            <p class="obs-na">Caricamento dati solari…</p>
+                        </div>
+                        <div class="sun-note" id="sunNote">
+                            Dati: <a href="https://www.swpc.noaa.gov" target="_blank">NOAA SWPC</a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </section>
+
+    </main>
+
+    <!-- ==========================
+         FOOTER
+    =========================== -->
+
+    <footer>
+        <p>
+            © 2026 AstroRisorse
+        </p>
+        <p>
+            Contatti - <a href="mailto:tnwebcam@gmail.com">tnwebcam@gmail.com</a>
+        </p>
+    </footer>
+
+    <!-- ==========================
+         JAVASCRIPT
+    =========================== -->
+
+    <script src="js/menu.js"></script>
+    <script src="js/astronomy.browser.min.js"></script>
+    <script src="js/osservazione.js"></script>
+
+</body>
+
+</html>
