@@ -342,6 +342,7 @@ async function fetchSWPC() {
         const ultimo = kpRes.value[kpRes.value.length - 1];
         out.kp = Number(ultimo.estimated_kp ?? ultimo.kp_index ?? 0);
         out.kpOra = ultimo.time_tag;
+        out.kpStorico = kpRes.value.slice(-24);   /* ultime 24 letture per il popup */
     }
 
     if (regioniRes.status === "fulfilled" && Array.isArray(regioniRes.value)) {
@@ -352,6 +353,7 @@ async function fetchSWPC() {
 
         const odierne = tutte.filter(r => r.observed_date === ultimaData);
 
+        out.regioniDettaglio = odierne;   /* dettaglio completo per i popup */
         out.data = ultimaData;
         out.regioni = odierne.length;
         out.macchie = odierne.reduce((s, r) => s + (r.number_spots || 0), 0);
@@ -380,7 +382,7 @@ function renderSun(swpc) {
     if (swpc.kp !== undefined) {
         const kpPos = Math.min(100, (swpc.kp / 9) * 100);
         stats.push(
-            '<div class="sun-stat">' +
+            '<div class="sun-stat sun-click" data-popup="kp" title="Clicca per i dettagli">' +
             '<div class="big">' + swpc.kp.toFixed(1) + "</div>" +
             '<div class="cap">Indice Kp (0–9)</div>' +
             '<div class="kp-track"><div class="kp-thumb" style="left:' + kpPos + '%"></div></div>' +
@@ -390,7 +392,7 @@ function renderSun(swpc) {
 
     if (swpc.regioni !== undefined) {
         stats.push(
-            '<div class="sun-stat">' +
+            '<div class="sun-stat sun-click" data-popup="regioni" title="Clicca per i dettagli">' +
             '<div class="big">' + swpc.regioni + "</div>" +
             '<div class="cap">Regioni attive</div>' +
             "</div>"
@@ -399,7 +401,7 @@ function renderSun(swpc) {
 
     if (swpc.macchie !== undefined) {
         stats.push(
-            '<div class="sun-stat">' +
+            '<div class="sun-stat sun-click" data-popup="macchie" title="Clicca per i dettagli">' +
             '<div class="big">' + swpc.macchie + "</div>" +
             '<div class="cap">Macchie solari totali</div>' +
             "</div>"
@@ -408,7 +410,7 @@ function renderSun(swpc) {
 
     if (swpc.flares !== undefined) {
         stats.push(
-            '<div class="sun-stat">' +
+            '<div class="sun-stat sun-click" data-popup="flare" title="Clicca per i dettagli">' +
             '<div class="big">' + swpc.flares + "</div>" +
             '<div class="cap">Flare C+M+X oggi</div>' +
             "</div>"
@@ -418,6 +420,12 @@ function renderSun(swpc) {
     el.innerHTML = stats.length > 0
         ? stats.join("")
         : na("Dati di attività solare non disponibili.");
+
+    /* clic su un riquadro: apre il popup di dettaglio */
+    el.querySelectorAll(".sun-click").forEach(s => {
+        s.addEventListener("click", () =>
+            showSunPopup(s.getAttribute("data-popup"), swpc));
+    });
 
     const note = dom("sunNote");
     let testo = 'Dati: <a href="https://www.swpc.noaa.gov" target="_blank">NOAA SWPC</a>';
@@ -441,7 +449,114 @@ function renderSun(swpc) {
         testo += " Regione principale: " + swpc.topRegione + ".";
     }
 
+    testo += " <em>Clicca su un riquadro per i dettagli.</em>";
+
     note.innerHTML = testo;
+}
+
+/* =====================================================
+   POPUP DETTAGLI ATTIVITA' SOLARE
+===================================================== */
+
+function fmtKpTime(t) {
+    if (!t) return "–";
+    let s = String(t).replace(" ", "T");
+    if (!/[Z+]/.test(s)) s += "Z";
+    const d = new Date(s);
+    return isNaN(d) ? String(t) : orario(d);
+}
+
+function kpScala(v) {
+    const pos = Math.max(0, Math.min(100, (v / 9) * 100));
+    return '<span class="kp-track"><span class="kp-thumb" style="left:' + pos + '%"></span></span>';
+}
+
+function showSunPopup(tipo, swpc) {
+
+    const overlay = dom("sunPopup");
+    let title = "";
+    let body = "";
+
+    if (tipo === "kp" && Array.isArray(swpc.kpStorico) && swpc.kpStorico.length > 0) {
+
+        title = "Indice Kp — ultime " + swpc.kpStorico.length + " letture";
+        body =
+            '<table class="sun-table"><thead><tr>' +
+            "<th>Ora</th><th>Kp stimato</th><th>Scala 0–9</th>" +
+            "</tr></thead><tbody>" +
+            swpc.kpStorico.map(k => {
+                const v = Number(k.estimated_kp ?? k.kp_index ?? 0);
+                return "<tr><td>" + fmtKpTime(k.time_tag) + "</td><td>" +
+                    v.toFixed(2) + "</td><td>" + kpScala(v) + "</td></tr>";
+            }).join("") +
+            "</tbody></table>" +
+            '<p class="sun-popup-note">Kp ≥ 5: tempesta geomagnetica possibile, aurora anche a latitudini insolite. Orari in ora italiana.</p>';
+
+    } else if (tipo === "regioni" && Array.isArray(swpc.regioniDettaglio)) {
+
+        title = "Regioni attive del " + (swpc.data || "");
+        body =
+            '<table class="sun-table"><thead><tr>' +
+            "<th>Regione</th><th>Posizione</th><th>Classe</th><th>Mag.</th><th>Area</th>" +
+            "</tr></thead><tbody>" +
+            swpc.regioniDettaglio.map(r =>
+                "<tr><td>AR" + r.region + "</td><td>" + (r.location || "–") + "</td><td>" +
+                (r.spot_class || "–") + "</td><td>" + (r.mag_class || "–") + "</td><td>" +
+                (r.area || "–") + "</td></tr>"
+            ).join("") +
+            "</tbody></table>" +
+            '<p class="sun-popup-note">Posizione in coordinate elioografiche (es. S14E05). Classe: Zurich/McIntosh. Mag.: complessità magnetica (D = delta, la più esplosiva). Area in milionesimi del disco solare.</p>';
+
+    } else if (tipo === "macchie" && Array.isArray(swpc.regioniDettaglio)) {
+
+        const tot = swpc.macchie || 0;
+        title = "Macchie per regione — totale " + tot;
+        const righe = swpc.regioniDettaglio.slice()
+            .sort((a, b) => (b.number_spots || 0) - (a.number_spots || 0));
+        body = righe.map(r => {
+            const n = r.number_spots || 0;
+            const w = tot > 0 ? Math.max(2, (n / tot) * 100) : 0;
+            return '<div class="meteo-row"><span class="hh">AR' + r.region + "</span>" +
+                '<span class="meteo-bar-track">' +
+                '<span class="meteo-bar" style="width:' + w + '%"></span></span>' +
+                '<span class="vv">' + n + "</span></div>";
+        }).join("") +
+        '<p class="sun-popup-note">Numero di macchie componenti ciascun gruppo, in ordine decrescente.</p>';
+
+    } else if (tipo === "flare" && Array.isArray(swpc.regioniDettaglio)) {
+
+        title = "Brillamenti per regione (classi C / M / X)";
+        const righe = swpc.regioniDettaglio.slice()
+            .sort((a, b) =>
+                ((b.x_xray_events || 0) * 100 + (b.m_xray_events || 0) * 10 + (b.c_xray_events || 0)) -
+                ((a.x_xray_events || 0) * 100 + (a.m_xray_events || 0) * 10 + (a.c_xray_events || 0)));
+        body =
+            '<table class="sun-table"><thead><tr>' +
+            "<th>Regione</th><th>C</th><th>M</th><th>X</th><th>Tot.</th>" +
+            "</tr></thead><tbody>" +
+            righe.map(r => {
+                const c = r.c_xray_events || 0;
+                const m = r.m_xray_events || 0;
+                const x = r.x_xray_events || 0;
+                return "<tr><td>AR" + r.region + "</td><td>" + c + "</td><td" +
+                    (m > 0 ? ' class="warn"' : "") + ">" + m + "</td><td" +
+                    (x > 0 ? ' class="warn"' : "") + ">" + x + "</td><td>" +
+                    (c + m + x) + "</td></tr>";
+            }).join("") +
+            "</tbody></table>" +
+            '<p class="sun-popup-note">Classi di brillamento in ordine di potenza: C (lievi), M (medie), X (le più intense). Le classi M e X possono innescare tempeste geomagnetiche nei giorni successivi.</p>';
+
+    } else {
+        return;   /* dati non disponibili per questo popup */
+    }
+
+    dom("sunPopupTitle").innerHTML = title;
+    dom("sunPopupBody").innerHTML = body;
+    overlay.hidden = false;
+}
+
+function closeSunPopup() {
+    dom("sunPopup").hidden = true;
 }
 
 /* =====================================================
@@ -611,6 +726,18 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     dom("obsDate").addEventListener("change", update);
     dom("obsPlace").addEventListener("change", update);
+
+    /* chiusura popup attività solare */
+    const popup = dom("sunPopup");
+    if (popup) {
+        dom("sunPopupClose").addEventListener("click", closeSunPopup);
+        popup.addEventListener("click", e => {
+            if (e.target === popup) closeSunPopup();
+        });
+        document.addEventListener("keydown", e => {
+            if (e.key === "Escape") closeSunPopup();
+        });
+    }
 
     update();
 });

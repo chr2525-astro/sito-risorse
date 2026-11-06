@@ -267,6 +267,102 @@
             color: var(--muted);
             font-style: italic;
         }
+
+        /* riquadri solari cliccabili */
+        .sun-click {
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: border-color .15s, transform .15s;
+        }
+
+        .sun-click:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* popup dettaglio attività solare */
+        .sun-popup {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 15, 30, .55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .sun-popup[hidden] {
+            display: none;
+        }
+
+        .sun-popup-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            max-width: 540px;
+            width: 100%;
+            max-height: 80vh;
+            overflow: auto;
+            padding: 1.1rem 1.3rem;
+        }
+
+        .sun-popup-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: .8rem;
+        }
+
+        .sun-popup-head h3 {
+            margin: 0;
+            font-size: 1.05rem;
+            color: var(--primary);
+        }
+
+        .sun-popup-head button {
+            border: none;
+            background: none;
+            color: var(--muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: .2rem .4rem;
+        }
+
+        .sun-popup-head button:hover {
+            color: var(--text);
+        }
+
+        .sun-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .85rem;
+        }
+
+        .sun-table th,
+        .sun-table td {
+            text-align: left;
+            padding: .35rem .5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sun-table th {
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .sun-table td.warn {
+            color: #f44336;
+            font-weight: bold;
+        }
+
+        .sun-popup-note {
+            margin-top: .7rem;
+            font-size: .78rem;
+            color: var(--muted);
+        }
     </style>
 </head>
 
@@ -497,6 +593,22 @@
     <!-- ==========================
          JAVASCRIPT
     =========================== -->
+
+    <!-- ==========================
+         POPUP ATTIVITA' SOLARE
+    =========================== -->
+
+    <div class="sun-popup" id="sunPopup" hidden>
+        <div class="sun-popup-card">
+            <div class="sun-popup-head">
+                <h3 id="sunPopupTitle"></h3>
+                <button type="button" id="sunPopupClose" aria-label="Chiudi">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="sun-popup-body" id="sunPopupBody"></div>
+        </div>
+    </div>
 
     <script src="js/menu.js"></script>
     <script src="js/astronomy.browser.min.js"></script>
