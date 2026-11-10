@@ -131,6 +131,7 @@ function computeAstronomy(place, dateStr) {
     if (midNight) {
         const ill = Astronomy.Illumination(Astronomy.Body.Moon, midNight);
         result.lunaIlluminazione = ill.phase_fraction;   /* 0..1 */
+        result.lunaFase = Astronomy.MoonPhase(midNight); /* angolo 0-360 gradi */
 
         /* presenza della luna sopra l'orizzonte nel buio astronomico */
         if (result.buioInizio && result.buioFine) {
@@ -166,6 +167,19 @@ function computeAstronomy(place, dateStr) {
    RENDER CIELO E LUNA
 ===================================================== */
 
+function nomeFaseLuna(angolo) {
+    if (angolo === undefined || angolo === null || isNaN(angolo)) return null;
+    const a = ((angolo % 360) + 360) % 360;
+    if (a < 22.5 || a >= 337.5) return "Luna nuova";
+    if (a < 67.5)  return "Luna crescente";
+    if (a < 112.5) return "Primo quarto";
+    if (a < 157.5) return "Gibbosa crescente";
+    if (a < 202.5) return "Luna piena";
+    if (a < 247.5) return "Gibbosa calante";
+    if (a < 292.5) return "Ultimo quarto";
+    return "Luna calante";
+}
+
 function renderSky(astro) {
 
     const el = dom("skyList");
@@ -194,6 +208,11 @@ function renderSky(astro) {
         astro.lunaSorge ? orarioEsteso(astro.lunaSorge) : null);
     add('<i class="fa-solid fa-arrow-down"></i> Luna tramonta',
         astro.lunaTramonta ? orarioEsteso(astro.lunaTramonta) : null);
+
+    if (astro.lunaFase !== undefined) {
+        add('<i class="fa-solid fa-moon"></i> Fase della Luna',
+            nomeFaseLuna(astro.lunaFase));
+    }
 
     if (astro.lunaIlluminazione !== undefined) {
         add('<i class="fa-solid fa-circle-half-stroke"></i> Luna illuminata',
