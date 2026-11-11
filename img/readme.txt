@@ -1,0 +1,1 @@
+cartella delle immagini
