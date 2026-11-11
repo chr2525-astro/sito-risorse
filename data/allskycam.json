@@ -2,7 +2,12 @@
   "cams":[
 {"nome":"Associazione Astrofili Aurunca","lat":41.270519,"lng":13.939855,"url":"https://allskyaaa.altervista.org/","immagine":"https://allskyaaa.altervista.org/image.jpg","stato":"online"},
 {"nome":"Allsky Cam Serramanna","lat":39.422778,"lng":8.921667,"url":"https://www.allskycameraproject.com/allsky/index.php","immagine":"https://www.allskycameraproject.com/allsky/image.jpg","stato":"online"},
-{"nome":"Astrofili Pisani AAGG","lat":43.42,"lng":10.71,"url":"https://www.astrofilipisani.it/allsky/","immagine":"https://www.astrofilipisani.it/allsky/image.jpg","stato":"online"}
+{"nome":"Astrofili Pisani AAGG","lat":43.42,"lng":10.71,"url":"https://www.astrofilipisani.it/allsky/","immagine":"https://www.astrofilipisani.it/allsky/image.jpg","stato":"online"},
+{"nome":"Gruppo Astrofili Vicentini","lat":45.497,"lng":11.534,"url":"https://astrofilivicentini.it/allsky/","immagine":"https://astrofilivicentini.it/allsky/image.jpg","stato":"online"},
+{"nome":"Osservatorio Piero Angela - Firenze","lat":43.747,"lng":11.1908,"url":"https://osservatorio-piero-angela.it/allsky/","immagine":"https://www.osservatorio-piero-angela.it/allsky/image.jpg","stato":"online"},
+{"nome":"Reggello RPi Allsky Camera","lat":43.683,"lng":11.535,"url":"http://gncrcr.it/allsky/","immagine":"http://gncrcr.it/allsky/image.jpg","stato":"online"},
+{"nome":"Osservatorio del Monte Baldo - Angelo Celodi","lat":45.697,"lng":10.858,"url":"https://www.osservatoriomontebaldo.it/allsky/image.jpg","immagine":"https://www.osservatoriomontebaldo.it/allsky/image.jpg","stato":"online"}
+
 
 
 
