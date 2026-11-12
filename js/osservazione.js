@@ -31,6 +31,13 @@ const fmtDay = new Intl.DateTimeFormat("it-IT", {
     month: "short"
 });
 
+const fmtDayFull = new Intl.DateTimeFormat("it-IT", {
+    timeZone: "Europe/Rome",
+    weekday: "long",
+    day: "numeric",
+    month: "long"
+});
+
 function orario(date) {
     return fmtTime.format(date);
 }
@@ -676,6 +683,252 @@ function renderVerdict(astro, serata) {
 }
 
 /* =====================================================
+   EVENTI (data/eventi.json, aggiornato a mano)
+===================================================== */
+
+function oggiRoma() {
+    return new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Europe/Rome",
+        year: "numeric", month: "2-digit", day: "2-digit"
+    }).format(new Date());
+}
+
+function dataPlusGiorni(dataStr, giorni) {
+    const [y, m, d] = dataStr.split("-").map(Number);
+    return new Date(Date.UTC(y, m - 1, d + giorni)).toISOString().slice(0, 10);
+}
+
+const iconeEvento = {
+    meteore: "meteor",
+    eclissi: "circle-half-stroke",
+    congiunzione: "star",
+    occultazione: "moon",
+    pianeti: "globe",
+    cometa: "comet",
+    altro: "calendar-days"
+};
+
+async function aggiornaEventi() {
+
+    const el = dom("eventiList");
+
+    try {
+        const r = await fetch("data/eventi.json");
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        const dati = await r.json();
+        const lista = dati.eventi || [];
+
+        const oggi = oggiRoma();
+        const limite = dataPlusGiorni(oggi, 30);
+
+        const futuri = lista
+            .filter(e => e.data && e.data >= oggi && e.data <= limite)
+            .sort((a, b) =>
+                (a.data + (a.ora || "")).localeCompare(b.data + (b.ora || "")));
+
+        if (futuri.length === 0) {
+            el.innerHTML = na("Nessun evento segnalato nei prossimi 30 giorni.");
+        } else {
+            el.innerHTML = futuri.map(e => {
+                const icona = iconeEvento[e.tipo] || iconeEvento.altro;
+                const chip = e.tipo ? ' <span class="chip">' + e.tipo + "</span>" : "";
+                const dt = new Date(e.data + "T12:00:00Z");
+                return '<div class="evento">' +
+                    '<div class="evento-head">' +
+                    '<span><i class="fa-solid fa-' + icona + '"></i> ' +
+                    (e.titolo || "Evento") + chip + "</span>" +
+                    '<span class="t">' + fmtDayFull.format(dt) +
+                    (e.ora ? " · " + e.ora : "") + "</span></div>" +
+                    (e.descrizione
+                        ? '<div class="evento-desc">' + e.descrizione + "</div>" : "") +
+                    (e.visibilita
+                        ? '<div class="evento-desc"><i class="fa-solid fa-eye"></i> ' +
+                          e.visibilita + "</div>" : "") +
+                    "</div>";
+            }).join("");
+        }
+
+        dom("eventiNote").innerHTML =
+            'Eventi curati manualmente nel file <code>data/eventi.json</code>.';
+
+    } catch (err) {
+        console.error("OSSERVAZIONE.JS - Errore eventi:", err);
+        el.innerHTML = na("File eventi non raggiungibile.");
+    }
+}
+
+/* =====================================================
+   FASI LUNARI (prossimi 30 giorni, calcolo locale)
+===================================================== */
+
+async function aggiornaFasi() {
+
+    const el = dom("fasiList");
+
+    try {
+        const nomi = { 0: "Luna nuova", 90: "Primo quarto", 180: "Luna piena", 270: "Ultimo quarto" };
+        const icone = { 0: "fa-moon", 90: "fa-circle-half-stroke", 180: "fa-circle", 270: "fa-circle-half-stroke" };
+
+        const adesso = new Date();
+        const fasi = [];
+
+        for (const ang of [0, 90, 180, 270]) {
+            const t = Astronomy.SearchMoonPhase(ang, adesso, 31);
+            if (t) fasi.push({ t: t.date, nome: nomi[ang], icona: icone[ang] });
+        }
+
+        fasi.sort((a, b) => a.t - b.t);
+
+        el.innerHTML = fasi.map(f =>
+            '<div class="sky-item"><span><i class="fa-solid ' + f.icona + '"></i> ' + f.nome +
+            '</span><span class="t">' + fmtDayFull.format(f.t) + " · " + orario(f.t) + "</span></div>"
+        ).join("");
+
+        dom("fasiNote").textContent =
+            "Momenti esatti delle fasi principali (ora italiana).";
+
+    } catch (err) {
+        console.error("OSSERVAZIONE.JS - Errore fasi lunari:", err);
+        el.innerHTML = na("Fasi lunari non disponibili.");
+    }
+}
+
+/* =====================================================
+   PASSAGGI ISS (calcolo locale da TLE)
+===================================================== */
+
+let issTLE = null;
+let issTLEOra = 0;
+
+async function scaricaTLE() {
+
+    if (issTLE && Date.now() - issTLEOra < 12 * 3600000) return issTLE;
+
+    /* prima scelta: CelesTrak (testo, 3 righe) */
+    try {
+        const r = await fetch(
+            "https://celestrak.org/NORAD/elements/gp.php?CATNR=25544&FORMAT=TLE");
+        if (r.ok) {
+            const righe = (await r.text()).trim().split("\n").map(s => s.trim());
+            if (righe.length >= 3 && righe[1].startsWith("1 ") && righe[2].startsWith("2 ")) {
+                issTLE = [righe[1], righe[2]];
+                issTLEOra = Date.now();
+                return issTLE;
+            }
+        }
+    } catch (e) { /* passa al fallback */ }
+
+    /* fallback: TLE API (JSON) */
+    const r2 = await fetch("https://tle.ivanstanojevic.me/api/tle/25544");
+    if (!r2.ok) throw new Error("TLE non disponibile");
+    const j = await r2.json();
+    issTLE = [j.line1, j.line2];
+    issTLEOra = Date.now();
+    return issTLE;
+}
+
+function direzione(az) {
+    const rose = ["N", "NE", "E", "SE", "S", "SO", "O", "NO"];
+    const a = ((az % 360) + 360) % 360;
+    return rose[Math.round(a / 45) % 8];
+}
+
+/* campiona la posizione della ISS ogni 30 s e raggruppa i passaggi
+   con elevazione massima sopra il minimo (default 10 gradi) */
+function calcolaPassaggiISS(satrec, lat, lon, giorni, sat) {
+
+    const obsGd = {
+        longitude: sat.degreesToRadians(lon),
+        latitude: sat.degreesToRadians(lat),
+        height: 0
+    };
+
+    const MIN_EL = 10;
+    const passi = [];
+    const inizio = Date.now();
+    const fine = inizio + giorni * 86400000;
+    let attuale = null;
+
+    for (let t = inizio; t <= fine; t += 30000) {
+
+        const d = new Date(t);
+        const pv = sat.propagate(satrec, d);
+
+        if (!pv || !pv.position) {
+            if (attuale) { attuale.fine = d; passi.push(attuale); attuale = null; }
+            continue;
+        }
+
+        const gmst = sat.gstime(d);
+        const ecf = sat.eciToEcf(pv.position, gmst);
+        const look = sat.ecfToLookAngles(obsGd, ecf);
+        const el = sat.radiansToDegrees(look.elevation);
+        const az = sat.radiansToDegrees(look.azimuth);
+
+        if (el >= MIN_EL) {
+            if (!attuale) {
+                attuale = { inizio: d, fine: d, maxEl: el, azMax: az };
+            } else {
+                attuale.fine = d;
+                if (el > attuale.maxEl) { attuale.maxEl = el; attuale.azMax = az; }
+            }
+        } else if (attuale) {
+            passi.push(attuale);
+            attuale = null;
+            if (passi.length >= 10) break;
+        }
+    }
+
+    if (attuale) passi.push(attuale);
+    return passi;
+}
+
+async function aggiornaISS(place) {
+
+    const el = dom("issList");
+
+    try {
+        if (typeof satellite === "undefined") {
+            el.innerHTML = na("Libreria satelliti non caricata.");
+            return;
+        }
+
+        const tle = await scaricaTLE();
+        const satrec = satellite.twoline2satrec(tle[0], tle[1]);
+
+        const passi = calcolaPassaggiISS(
+            satrec,
+            parseFloat(place.latitudine),
+            parseFloat(place.longitudine),
+            5,
+            satellite
+        );
+
+        if (passi.length === 0) {
+            el.innerHTML = na(
+                "Nessun passaggio sopra 10° di elevazione nei prossimi 5 giorni.");
+            return;
+        }
+
+        el.innerHTML = passi.slice(0, 6).map(p =>
+            '<div class="sky-item"><span><i class="fa-solid fa-satellite"></i> ' +
+            fmtDayFull.format(p.inizio) + " · " + orario(p.inizio) + "–" + orario(p.fine) +
+            '</span><span class="t">max ' + p.maxEl.toFixed(0) + "° · " +
+            direzione(p.azMax) + "</span></div>"
+        ).join("");
+
+        dom("issNote").innerHTML =
+            "Passaggi con elevazione massima sopra 10° (visibili a occhio nudo " +
+            "quando la ISS è illuminata dal Sole). Calcolo locale da TLE: " +
+            '<a href="https://celestrak.org" target="_blank">CelesTrak</a>.';
+
+    } catch (err) {
+        console.error("OSSERVAZIONE.JS - Errore ISS:", err);
+        el.innerHTML = na("Passaggi ISS non disponibili.");
+    }
+}
+
+/* =====================================================
    AGGIORNAMENTO COMPLESSIVO
 ===================================================== */
 
@@ -722,6 +975,11 @@ async function update() {
         console.error("OSSERVAZIONE.JS - Errore SWPC:", err);
         dom("sunGrid").innerHTML = na("Dati di attività solare non raggiungibili.");
     }
+
+    /* eventi, fasi lunari e passaggi ISS */
+    try { await aggiornaEventi(); } catch (err) { console.error(err); }
+    try { await aggiornaFasi(); } catch (err) { console.error(err); }
+    try { await aggiornaISS(place); } catch (err) { console.error(err); }
 }
 
 /* =====================================================

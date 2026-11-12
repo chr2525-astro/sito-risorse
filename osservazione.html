@@ -363,6 +363,62 @@
             font-size: .78rem;
             color: var(--muted);
         }
+
+        /* eventi, fasi lunari e passaggi ISS */
+        .evento {
+            padding: .45rem 0;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .evento:last-child {
+            border-bottom: none;
+        }
+
+        .evento-head {
+            display: flex;
+            justify-content: space-between;
+            gap: .8rem;
+            flex-wrap: wrap;
+        }
+
+        .evento-head i {
+            color: var(--primary);
+            margin-right: .3rem;
+        }
+
+        .evento-head .t {
+            font-weight: bold;
+            color: var(--secondary);
+            white-space: nowrap;
+        }
+
+        .evento-desc {
+            font-size: .85rem;
+            color: var(--muted);
+            margin-top: .15rem;
+        }
+
+        .evento-desc i {
+            margin-right: .3rem;
+        }
+
+        .chip {
+            display: inline-block;
+            font-size: .72rem;
+            padding: .05rem .5rem;
+            border-radius: 10px;
+            background: var(--light);
+            color: var(--secondary);
+            border: 1px solid var(--border);
+            margin-left: .4rem;
+            font-weight: normal;
+        }
+
+        .sky-note code {
+            background: var(--light);
+            padding: .05rem .3rem;
+            border-radius: 4px;
+        }
     </style>
 </head>
 
@@ -569,6 +625,37 @@
                         </div>
                     </div>
 
+                    <!-- EVENTI PROSSIMI 30 GIORNI -->
+                    <div class="obs-card">
+                        <h2><i class="fa-solid fa-calendar-days"></i> Eventi dei prossimi 30 giorni</h2>
+                        <div id="eventiList">
+                            <p class="obs-na">Caricamento eventi…</p>
+                        </div>
+                        <div class="sky-note" id="eventiNote"></div>
+                    </div>
+
+                    <div class="obs-grid">
+
+                        <!-- FASI LUNARI -->
+                        <div class="obs-card">
+                            <h2><i class="fa-solid fa-moon"></i> Fasi lunari (30 giorni)</h2>
+                            <div id="fasiList">
+                                <p class="obs-na">Calcolo in corso…</p>
+                            </div>
+                            <div class="sky-note" id="fasiNote"></div>
+                        </div>
+
+                        <!-- PASSAGGI ISS -->
+                        <div class="obs-card">
+                            <h2><i class="fa-solid fa-satellite"></i> Passaggi ISS (5 giorni)</h2>
+                            <div id="issList">
+                                <p class="obs-na">Caricamento passaggi…</p>
+                            </div>
+                            <div class="sky-note" id="issNote"></div>
+                        </div>
+
+                    </div>
+
                 </div>
 
             </section>
@@ -612,6 +699,7 @@
 
     <script src="js/menu.js"></script>
     <script src="js/astronomy.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/satellite.js@5.0.0/dist/satellite.min.js"></script>
     <script src="js/osservazione.js"></script>
 
 </body>

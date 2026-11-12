@@ -40,6 +40,7 @@ Struttura delle cartelle/file
 │
 ├── data/
 │   ├── allskycam.json    -- json contenente i dati presentati nella pagina allskycam
+│   ├── eventi.json       -- json contenente gli eventi astronomici in arrivo (pagina osservazione, aggiornamento manuale)
 │   ├── astrofili.json    -- json contenente i dati presentati nella pagina associazioni astrofili
 │   ├── biblioteca.json   -- json contenente i dati presentati nella pagina biblioteca
 │   ├── gallery.json      -- json contenente i dati presentati nella pagina galleria
@@ -84,7 +85,7 @@ Struttura delle cartelle/file
 | **galleria.html** | `menu.js`, `gallery.js` | `gallery.json` |
 | **oggetti.html** | `menu.js`, `astronomy.browser.min.js`, `luoghi.js`, `oggetti.js` | `luoghi.json`, `oggetti.json` |
 | **oggetti_mio.html** | `menu.js`, `astronomy.browser.min.js`, `luoghi.js`, `oggetti_mio.js` | `luoghi.json`, `oggetti_mio.json` |
-| **osservazione.html** | `menu.js`, `astronomy.browser.min.js`, `osservazione.js` | `luoghi.json` |
+| **osservazione.html** | `menu.js`, `astronomy.browser.min.js`, `satellite.js` (CDN), `osservazione.js` | `luoghi.json`, `eventi.json` |
 
 ---
 
@@ -96,3 +97,9 @@ La pagina "Stasera si osserva?" recupera i dati da servizi esterni direttamente 
 - **NOAA SWPC** (`https://services.swpc.noaa.gov`) — indice geomagnetico Kp, regioni attive del Sole, numero di macchie solari ed eventi di brillamento (classi C/M/X).
 
 Data e luogo osservazione sono valorizzati di default (luogo: primo elemento di `data/luoghi.json`, data: giorno corrente in ora italiana) e modificabili dall'utente.
+
+In fondo alla pagina altre tre sezioni:
+
+- **Eventi dei prossimi 30 giorni** — letti da `data/eventi.json`, aggiornato manualmente; vengono mostrati solo gli eventi con data compresa tra oggi e i prossimi 30 giorni.
+- **Fasi lunari dei prossimi 30 giorni** — calcolate localmente con Astronomy Engine (Luna nuova, Primo quarto, Luna piena, Ultimo quarto, con data e ora esatta).
+- **Passaggi ISS dei prossimi 5 giorni** — calcolati nel browser con `satellite.js` (CDN) a partire dal TLE corrente della ISS (CelesTrak, con fallback su tle.ivanstanojevic.me); passaggi con elevazione massima sopra 10°.

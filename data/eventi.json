@@ -1,0 +1,12 @@
+{
+  "eventi": [
+    {
+      "data": "2026-11-17",
+      "ora": "03:00",
+      "tipo": "meteore",
+      "titolo": "Leonidi - massimo",
+      "descrizione": "Sciame meteorico associato alla cometa 55P/Tempel-Tuttle. Massimo attorno a 10-15 meteore/ora dal radiante nel Leone.",
+      "visibilita": "seconda parte della notte"
+    }
+  ]
+}
