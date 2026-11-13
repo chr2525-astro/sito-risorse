@@ -833,15 +833,49 @@ function direzione(az) {
     return rose[Math.round(a / 45) % 8];
 }
 
+/* Sole sopra l'orizzonte dell'osservatore? altitudine in gradi */
+function altSole(d, obs, astro) {
+    const time = astro.MakeTime(d);
+    const eq = astro.Equator(astro.Body.Sun, time, obs, true, true);
+    const hor = astro.Horizon(time, obs, eq.ra, eq.dec, "normal");
+    return hor.altitude;
+}
+
+/* la ISS è illuminata dal Sole?
+   (approssimazione con cilindro d'ombra: basta per i passaggi) */
+function issIlluminata(posEci, d, astro) {
+
+    const AU = 149597870.7;             /* km */
+    const R = 6378;                     /* raggio Terra in km */
+    const sole = astro.GeoVector(astro.Body.Sun, astro.MakeTime(d), true);
+    const sx = sole.x * AU, sy = sole.y * AU, sz = sole.z * AU;
+
+    const dot = posEci.x * sx + posEci.y * sy + posEci.z * sz;
+    if (dot > 0) return true;           /* lato diurno: illuminata */
+
+    /* lato notturno: distanza perpendicolare dall'asse Terra-Sole */
+    const s2 = sx * sx + sy * sy + sz * sz;
+    const t = dot / s2;
+    const px = posEci.x - t * sx;
+    const py = posEci.y - t * sy;
+    const pz = posEci.z - t * sz;
+    return (px * px + py * py + pz * pz) > R * R;
+}
+
 /* campiona la posizione della ISS ogni 30 s e raggruppa i passaggi
-   con elevazione massima sopra il minimo (default 10 gradi) */
-function calcolaPassaggiISS(satrec, lat, lon, giorni, sat) {
+   con elevazione massima sopra il minimo (default 10 gradi).
+   Per ogni passaggio memorizza anche:
+   - soleAlt: altitudine del Sole all'istante del massimo
+   - illuminata: ISS fuori dall'ombra della Terra
+   Il passaggio è "visibile" se illuminata && soleAlt < -6 (buio civile). */
+function calcolaPassaggiISS(satrec, lat, lon, giorni, sat, astro) {
 
     const obsGd = {
         longitude: sat.degreesToRadians(lon),
         latitude: sat.degreesToRadians(lat),
         height: 0
     };
+    const obs = astro ? new astro.Observer(lat, lon, 0) : null;
 
     const MIN_EL = 10;
     const passi = [];
@@ -867,20 +901,30 @@ function calcolaPassaggiISS(satrec, lat, lon, giorni, sat) {
 
         if (el >= MIN_EL) {
             if (!attuale) {
-                attuale = { inizio: d, fine: d, maxEl: el, azMax: az };
+                attuale = { inizio: d, fine: d, maxEl: el, azMax: az,
+                            soleAlt: null, illuminata: true };
             } else {
                 attuale.fine = d;
-                if (el > attuale.maxEl) { attuale.maxEl = el; attuale.azMax = az; }
+            }
+            if (el > attuale.maxEl) {
+                attuale.maxEl = el;
+                attuale.azMax = az;
+                if (astro) {
+                    attuale.soleAlt = altSole(d, obs, astro);
+                    attuale.illuminata = issIlluminata(pv.position, d, astro);
+                }
             }
         } else if (attuale) {
             passi.push(attuale);
             attuale = null;
-            if (passi.length >= 10) break;
+            if (passi.length >= 20) break;
         }
     }
 
     if (attuale) passi.push(attuale);
-    return passi;
+
+    /* solo passaggi visibili: cielo buio e ISS illuminata */
+    return passi.filter(p => p.illuminata && (p.soleAlt === null || p.soleAlt < -6));
 }
 
 async function aggiornaISS(place) {
@@ -901,12 +945,14 @@ async function aggiornaISS(place) {
             parseFloat(place.latitudine),
             parseFloat(place.longitudine),
             5,
-            satellite
+            satellite,
+            Astronomy
         );
 
         if (passi.length === 0) {
             el.innerHTML = na(
-                "Nessun passaggio sopra 10° di elevazione nei prossimi 5 giorni.");
+                "Nessun passaggio visibile nei prossimi 5 giorni " +
+                "(di giorno o con la ISS in ombra).");
             return;
         }
 
@@ -918,8 +964,9 @@ async function aggiornaISS(place) {
         ).join("");
 
         dom("issNote").innerHTML =
-            "Passaggi con elevazione massima sopra 10° (visibili a occhio nudo " +
-            "quando la ISS è illuminata dal Sole). Calcolo locale da TLE: " +
+            "Solo passaggi visibili: elevazione massima sopra 10°, ISS " +
+            "illuminata dal Sole e cielo buio (Sole sotto -6°). " +
+            "Calcolo locale da TLE: " +
             '<a href="https://celestrak.org" target="_blank">CelesTrak</a>.';
 
     } catch (err) {

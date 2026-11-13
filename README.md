@@ -102,4 +102,4 @@ In fondo alla pagina altre tre sezioni:
 
 - **Eventi dei prossimi 30 giorni** — letti da `data/eventi.json`, aggiornato manualmente; vengono mostrati solo gli eventi con data compresa tra oggi e i prossimi 30 giorni.
 - **Fasi lunari dei prossimi 30 giorni** — calcolate localmente con Astronomy Engine (Luna nuova, Primo quarto, Luna piena, Ultimo quarto, con data e ora esatta).
-- **Passaggi ISS dei prossimi 5 giorni** — calcolati nel browser con `satellite.js` (CDN) a partire dal TLE corrente della ISS (CelesTrak, con fallback su tle.ivanstanojevic.me); passaggi con elevazione massima sopra 10°.
+- **Passaggi ISS dei prossimi 5 giorni** — calcolati nel browser con `satellite.js` (CDN) a partire dal TLE corrente della ISS (CelesTrak, con fallback su tle.ivanstanojevic.me); vengono mostrati solo i passaggi visibili: elevazione massima sopra 10°, ISS illuminata dal Sole (fuori dall'ombra della Terra) e cielo buio all'osservatore (Sole sotto -6°).
