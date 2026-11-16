@@ -250,6 +250,8 @@ function initLightbox() {
             caption.textContent =
                 img.dataset.description;
 
+            resetZoom();
+
             lightbox.classList.add(
                 "active"
             );
@@ -277,6 +279,8 @@ function initLightbox() {
         );
 
         lightboxImg.src = "";
+
+        resetZoom();
     }
 
     /* X */
@@ -321,6 +325,153 @@ function initLightbox() {
         }
     );
 
+
+    /* ---------------------------------
+       Zoom e pan sull'immagine
+    --------------------------------- */
+
+    let zoom = 1;
+    let panX = 0;
+    let panY = 0;
+    let trascina = null;
+    let tocco = null;
+
+    function applicaTrasform() {
+
+        /* limita lo spostamento: l'immagine non può uscire dalla vista */
+        const maxX = (zoom - 1) * lightboxImg.clientWidth / 2;
+        const maxY = (zoom - 1) * lightboxImg.clientHeight / 2;
+        panX = Math.min(maxX, Math.max(-maxX, panX));
+        panY = Math.min(maxY, Math.max(-maxY, panY));
+
+        lightboxImg.style.transform =
+            "translate(" + panX + "px, " + panY + "px) scale(" + zoom + ")";
+        lightboxImg.style.cursor =
+            zoom > 1 ? "grab" : "";
+    }
+
+    function resetZoom() {
+        zoom = 1;
+        panX = 0;
+        panY = 0;
+        applicaTrasform();
+    }
+
+    function impostaZoom(nuovo) {
+        zoom = Math.min(8, Math.max(1, nuovo));
+        if (zoom === 1) {
+            panX = 0;
+            panY = 0;
+        }
+        applicaTrasform();
+    }
+
+    /* rotella del mouse */
+    lightbox.addEventListener(
+        "wheel",
+        function (event) {
+            if (!lightbox.classList.contains("active")) return;
+            event.preventDefault();
+            impostaZoom(zoom * (event.deltaY < 0 ? 1.15 : 1 / 1.15));
+        },
+        { passive: false }
+    );
+
+    /* doppio clic: alterna 1x / 2.5x */
+    lightboxImg.addEventListener(
+        "dblclick",
+        function () {
+            impostaZoom(zoom > 1 ? 1 : 2.5);
+        }
+    );
+
+    /* pan col mouse (solo se ingrandito) */
+    lightboxImg.addEventListener(
+        "mousedown",
+        function (event) {
+            if (zoom <= 1) return;
+            event.preventDefault();
+            trascina = { x: event.clientX, y: event.clientY, px: panX, py: panY };
+            lightboxImg.style.cursor = "grabbing";
+        }
+    );
+
+    window.addEventListener(
+        "mousemove",
+        function (event) {
+            if (!trascina) return;
+            panX = trascina.px + (event.clientX - trascina.x);
+            panY = trascina.py + (event.clientY - trascina.y);
+            applicaTrasform();
+        }
+    );
+
+    window.addEventListener(
+        "mouseup",
+        function () {
+            if (!trascina) return;
+            trascina = null;
+            lightboxImg.style.cursor = zoom > 1 ? "grab" : "";
+        }
+    );
+
+    /* touch: trascinamento con un dito, zoom con due (pinch) */
+    function distanzaDita(touches) {
+        const dx = touches[0].clientX - touches[1].clientX;
+        const dy = touches[0].clientY - touches[1].clientY;
+        return Math.hypot(dx, dy);
+    }
+
+    lightboxImg.addEventListener(
+        "touchstart",
+        function (event) {
+            if (event.touches.length === 2) {
+                tocco = { pinch: distanzaDita(event.touches) };
+            } else if (event.touches.length === 1 && zoom > 1) {
+                tocco = {
+                    x: event.touches[0].clientX,
+                    y: event.touches[0].clientY
+                };
+            }
+        },
+        { passive: true }
+    );
+
+    lightboxImg.addEventListener(
+        "touchmove",
+        function (event) {
+            if (!tocco) return;
+            event.preventDefault();
+            if (event.touches.length === 2) {
+                const d = distanzaDita(event.touches);
+                if (tocco.pinch) impostaZoom(zoom * d / tocco.pinch);
+                tocco.pinch = d;
+            } else if (event.touches.length === 1 && tocco.x !== undefined) {
+                const t = event.touches[0];
+                panX += t.clientX - tocco.x;
+                panY += t.clientY - tocco.y;
+                tocco = { x: t.clientX, y: t.clientY };
+                applicaTrasform();
+            }
+        },
+        { passive: false }
+    );
+
+    lightboxImg.addEventListener(
+        "touchend",
+        function () {
+            tocco = null;
+        }
+    );
+
+    /* pulsanti zoom */
+    const zoomIn = document.getElementById("zoomIn");
+    const zoomOut = document.getElementById("zoomOut");
+    const zoomReset = document.getElementById("zoomReset");
+
+    if (zoomIn) zoomIn.addEventListener("click", function () { impostaZoom(zoom * 1.3); });
+    if (zoomOut) zoomOut.addEventListener("click", function () { impostaZoom(zoom / 1.3); });
+    if (zoomReset) zoomReset.addEventListener("click", resetZoom);
 }
 
 /* =====================================================

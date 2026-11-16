@@ -23,6 +23,40 @@
     <link rel="stylesheet"
           href="css/style.css">
 
+    <style>
+
+        /* zoom e pan del lightbox */
+        .lightbox-controls {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .lightbox-controls button {
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            width: 40px;
+            height: 38px;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .lightbox-controls button:hover {
+            background: rgba(0, 0, 0, 0.85);
+        }
+
+        #lightboxImg {
+            touch-action: none;
+        }
+
+    </style>
+
 </head>
 
 <body>
@@ -241,6 +275,20 @@
             <i class="fa-solid fa-xmark"></i>
 
         </button>
+
+        <div class="lightbox-controls">
+
+            <button id="zoomOut" aria-label="Riduci zoom">
+                <i class="fa-solid fa-magnifying-glass-minus"></i>
+            </button>
+
+            <button id="zoomReset" aria-label="Reimposta zoom">1:1</button>
+
+            <button id="zoomIn" aria-label="Aumenta zoom">
+                <i class="fa-solid fa-magnifying-glass-plus"></i>
+            </button>
+
+        </div>
 
         <img id="lightboxImg"
              src=""
