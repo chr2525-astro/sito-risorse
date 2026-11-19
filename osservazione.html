@@ -168,7 +168,7 @@
         /* barre meteo */
         .meteo-row {
             display: grid;
-            grid-template-columns: 3.2rem 1fr 3.4rem;
+            grid-template-columns: minmax(7.8rem, auto) 1fr 3.4rem;
             gap: .6rem;
             align-items: center;
             padding: .18rem 0;
@@ -447,6 +447,13 @@
                 </li>
 
                 <li>
+                    <a href="osservazione.html">
+                        <i class="fa-solid fa-binoculars"></i>
+                        Osservazione
+                    </a>
+                </li>
+
+                <li>
                     <a href="biblioteca.html">
                         <i class="fa-solid fa-book"></i>
                         Biblioteca
@@ -558,9 +565,7 @@
                         Riepilogo delle condizioni di osservazione per la serata scelta:
                         orari di tramonto, buio astronomico, sorgere/tramonto e fase della Luna,
                         meteo serale e attività solare.
-                        Gli orari sono in ora locale, con lo spostamento
-                        rispetto a UTC indicato accanto a ogni orario
-                        (es. UTC+1 in inverno, UTC+2 in estate).
+                        Gli orari sono espressi in ora locale nel formato: ora locale (UTC + spostamento rispetto a UTC).
                     </p>
 
                     <!-- PARAMETRI -->
@@ -707,4 +712,3 @@
 </body>
 
 </html>
-

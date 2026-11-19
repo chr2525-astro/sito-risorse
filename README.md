@@ -129,7 +129,7 @@ Pagina di errore 404 con link alla home. Per l'errore personalizzato: su GitHub 
 
 ### oggetti.html
 
-Catalogo interattivo degli oggetti del cielo profondo (NGC, Messier, IC, Collinder, Melotte, Caldwell) con filtri per catalogo, tipo, magnitudine fotografica e dimensioni; ordinamento per colonna; riga cliccabile con sparkline SVG dell'altezza nelle 12 ore successive con etichette di azimut. **Altezza e azimut** sono calcolati nel browser con Astronomy Engine (`js/astronomy.browser.min.js`) per il luogo (da `data/luoghi.json`) e la data/ora scelti. **L'ora di osservazione è in UTC** (input etichettato "Ora osservazione (UTC)").
+Catalogo interattivo degli oggetti del cielo profondo (NGC, Messier, IC, Collinder, Melotte, Caldwell) con filtri per catalogo, tipo, magnitudine fotografica e dimensioni; ordinamento per colonna; riga cliccabile con sparkline SVG dell'altezza nelle 12 ore successive con etichette di azimut. **Altezza e azimut** sono calcolati nel browser con Astronomy Engine (`js/astronomy.browser.min.js`) per il luogo (da `data/luoghi.json`) e la data/ora scelti. **L'ora di osservazione è in ora locale** (input etichettato "Ora osservazione (ora locale)"). Tutti gli orari indicati sono rappresentati nel formato `ora locale (UTC + spostamento rispetto a UTC)`.
 
 ### oggetti_mio.html
 
@@ -137,7 +137,7 @@ Versione personale della pagina oggetti, con la colonna aggiuntiva "Osservato" p
 
 ### osservazione.html
 
-Dashboard "Stasera si osserva?". In cima: data (default: oggi, ora italiana) e luogo (default: primo elemento di `data/luoghi.json`, Roma), modificabili.
+Dashboard "Stasera si osserva?". In cima: data (default: oggi, ora locale) e luogo (default: primo elemento di `data/luoghi.json`, Roma), modificabili. Tutti gli orari della pagina sono espressi in ora locale nel formato: `ora locale (UTC + spostamento rispetto a UTC)`.
 
 Card principali:
 
@@ -152,7 +152,7 @@ In fondo alla pagina altre tre sezioni:
 - **Fasi lunari dei prossimi 30 giorni** — calcolate localmente con Astronomy Engine (Luna nuova, Primo quarto, Luna piena, Ultimo quarto, con data e ora esatta).
 - **Passaggi ISS dei prossimi 5 giorni** — calcolati nel browser con `satellite.js` (CDN) a partire dal TLE corrente della ISS (CelesTrak, con fallback su tle.ivanstanojevic.me); vengono mostrati solo i passaggi visibili: elevazione massima sopra 10°, ISS illuminata dal Sole (fuori dall'ombra della Terra) e cielo buio all'osservatore (Sole sotto -6°).
 
-Tutti gli orari della pagina sono in ora italiana (Europe/Rome).
+Tutti gli orari della pagina sono in ora locale nel formato: `ora locale (UTC + spostamento rispetto a UTC)`.
 
 ### satelliti.html
 
