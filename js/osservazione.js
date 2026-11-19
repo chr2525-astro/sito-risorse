@@ -15,7 +15,7 @@
 let places = [];
 
 /* =====================================================
-   FORMATTAZIONE ORARI (ora italiana, Europe/Rome)
+   FORMATTAZIONE ORARI (ora locale, Europe/Rome)
 ===================================================== */
 
 const fmtTime = new Intl.DateTimeFormat("it-IT", {
@@ -38,12 +38,50 @@ const fmtDayFull = new Intl.DateTimeFormat("it-IT", {
     month: "long"
 });
 
+/* Spostamento di Europe/Rome rispetto a UTC all'istante indicato, in ore (1 o 2) */
+function offsetRoma(date) {
+
+    const dtf = new Intl.DateTimeFormat("en-US", {
+        timeZone: "Europe/Rome", hour12: false,
+        year: "numeric", month: "2-digit", day: "2-digit",
+        hour: "2-digit", minute: "2-digit", second: "2-digit"
+    });
+
+    const p = {};
+    for (const x of dtf.formatToParts(date)) p[x.type] = x.value;
+
+    const comeUTC = Date.UTC(
+        Number(p.year), Number(p.month) - 1, Number(p.day),
+        Number(p.hour) % 24, Number(p.minute), Number(p.second));
+
+    return (comeUTC - date.getTime()) / 3600000;
+}
+
+/* "UTC+1" oppure "UTC+2" in base all'ora legale */
+function suffissoUTC(off) {
+
+    return "UTC" + (off >= 0 ? "+" : "-") +
+        (Number.isInteger(Math.abs(off)) ? Math.abs(off) : Math.abs(off).toFixed(1));
+}
+
+/* Interpreta "YYYY-MM-DDThh:mm[:ss]" come ora locale italiana
+   e restituisce la Date corrispondente */
+function dataOraLocale(testo) {
+
+    const iso = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(testo)
+        ? testo + ":00" : testo;
+    const comeUTC = Date.parse(iso + "Z");
+    const off = offsetRoma(new Date(comeUTC));
+    return new Date(comeUTC - off * 3600000);
+}
+
 function orario(date) {
-    return fmtTime.format(date);
+    return fmtTime.format(date) + " (" + suffissoUTC(offsetRoma(date)) + ")";
 }
 
 function orarioEsteso(date) {
-    return fmtDay.format(date) + " " + fmtTime.format(date);
+    return fmtDay.format(date) + " " + fmtTime.format(date) +
+        " (" + suffissoUTC(offsetRoma(date)) + ")";
 }
 
 function dom(id) {
@@ -314,6 +352,12 @@ function renderMeteo(serata) {
 
     const el = dom("meteoList");
 
+    /* suffisso UTC in base alla data selezionata */
+    const dv = dom("obsDate").value;
+    const sfx = dv
+        ? " (" + suffissoUTC(offsetRoma(dataOraLocale(dv + "T20:00"))) + ")"
+        : "";
+
     if (!serata || serata.length === 0) {
         el.innerHTML = na("Dati meteo non disponibili.");
         return;
@@ -324,7 +368,7 @@ function renderMeteo(serata) {
             ? 0 : Math.max(2, h.nuvolosita);
         return (
             '<div class="meteo-row">' +
-            '<span class="hh">' + h.ora + "</span>" +
+            '<span class="hh">' + h.ora + sfx + "</span>" +
             '<span class="meteo-bar-track">' +
             '<span class="meteo-bar" style="width:' + pct + '%"></span></span>' +
             '<span class="vv">' +
@@ -516,7 +560,7 @@ function showSunPopup(tipo, swpc) {
                     v.toFixed(2) + "</td><td>" + kpScala(v) + "</td></tr>";
             }).join("") +
             "</tbody></table>" +
-            '<p class="sun-popup-note">Kp ≥ 5: tempesta geomagnetica possibile, aurora anche a latitudini insolite. Orari in ora italiana.</p>';
+            '<p class="sun-popup-note">Kp ≥ 5: tempesta geomagnetica possibile, aurora anche a latitudini insolite. Orari in ora locale.</p>';
 
     } else if (tipo === "regioni" && Array.isArray(swpc.regioniDettaglio)) {
 
@@ -785,7 +829,7 @@ async function aggiornaFasi() {
         ).join("");
 
         dom("fasiNote").textContent =
-            "Momenti esatti delle fasi principali (ora italiana).";
+            "Momenti esatti delle fasi principali (ora locale).";
 
     } catch (err) {
         console.error("OSSERVAZIONE.JS - Errore fasi lunari:", err);
@@ -1065,3 +1109,4 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     update();
 });
+
