@@ -15,73 +15,49 @@
 let places = [];
 
 /* =====================================================
-   FORMATTAZIONE ORARI (ora locale, Europe/Rome)
+   FORMATTAZIONE ORARI (ora locale del browser)
 ===================================================== */
 
 const fmtTime = new Intl.DateTimeFormat("it-IT", {
-    timeZone: "Europe/Rome",
     hour: "2-digit",
     minute: "2-digit"
 });
 
 const fmtDay = new Intl.DateTimeFormat("it-IT", {
-    timeZone: "Europe/Rome",
     weekday: "short",
     day: "numeric",
     month: "short"
 });
 
 const fmtDayFull = new Intl.DateTimeFormat("it-IT", {
-    timeZone: "Europe/Rome",
     weekday: "long",
     day: "numeric",
     month: "long"
 });
 
-/* Spostamento di Europe/Rome rispetto a UTC all'istante indicato, in ore (1 o 2) */
-function offsetRoma(date) {
-
-    const dtf = new Intl.DateTimeFormat("en-US", {
-        timeZone: "Europe/Rome", hour12: false,
-        year: "numeric", month: "2-digit", day: "2-digit",
-        hour: "2-digit", minute: "2-digit", second: "2-digit"
-    });
-
-    const p = {};
-    for (const x of dtf.formatToParts(date)) p[x.type] = x.value;
-
-    const comeUTC = Date.UTC(
-        Number(p.year), Number(p.month) - 1, Number(p.day),
-        Number(p.hour) % 24, Number(p.minute), Number(p.second));
-
-    return (comeUTC - date.getTime()) / 3600000;
-}
-
-/* "UTC+1" oppure "UTC+2" in base all'ora legale */
-function suffissoUTC(off) {
-
-    return "UTC" + (off >= 0 ? "+" : "-") +
-        (Number.isInteger(Math.abs(off)) ? Math.abs(off) : Math.abs(off).toFixed(1));
-}
-
-/* Interpreta "YYYY-MM-DDThh:mm[:ss]" come ora locale italiana
-   e restituisce la Date corrispondente */
-function dataOraLocale(testo) {
-
-    const iso = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(testo)
-        ? testo + ":00" : testo;
-    const comeUTC = Date.parse(iso + "Z");
-    const off = offsetRoma(new Date(comeUTC));
-    return new Date(comeUTC - off * 3600000);
+function getUtcOffsetString(date) {
+    const d = (date instanceof Date && !isNaN(date.getTime())) ? date : new Date();
+    const offsetMin = -d.getTimezoneOffset();
+    const sign = offsetMin >= 0 ? "+" : "-";
+    const absMin = Math.abs(offsetMin);
+    const offH = Math.floor(absMin / 60);
+    const offM = absMin % 60;
+    const offMStr = offM > 0 ? `:${String(offM).padStart(2, "0")}` : "";
+    return `(UTC ${sign} ${offH}${offMStr})`;
 }
 
 function orario(date) {
-    return fmtTime.format(date) + " (" + suffissoUTC(offsetRoma(date)) + ")";
+    if (!date) return "–";
+    const d = (date instanceof Date) ? date : new Date(date);
+    if (isNaN(d.getTime())) return String(date);
+    return fmtTime.format(d) + " " + getUtcOffsetString(d);
 }
 
 function orarioEsteso(date) {
-    return fmtDay.format(date) + " " + fmtTime.format(date) +
-        " (" + suffissoUTC(offsetRoma(date)) + ")";
+    if (!date) return "–";
+    const d = (date instanceof Date) ? date : new Date(date);
+    if (isNaN(d.getTime())) return String(date);
+    return fmtDay.format(d) + " " + fmtTime.format(d) + " " + getUtcOffsetString(d);
 }
 
 function dom(id) {
@@ -305,7 +281,7 @@ async function fetchMeteo(place, dateStr) {
         "?latitude=" + place.latitudine +
         "&longitude=" + place.longitudine +
         "&hourly=cloud_cover,precipitation_probability,relative_humidity_2m,wind_speed_10m,visibility" +
-        "&timezone=Europe%2FBerlin" +
+        "&timezone=auto" +
         "&start_date=" + dateStr +
         "&end_date=" + dateEnd;
 
@@ -329,8 +305,10 @@ function estraiSerata(meteo, dateStr) {
         const notteDopo = (giorno !== dateStr && ora <= 3);
 
         if (inGiorno || notteDopo) {
+            const dtMeteo = new Date(t);
+            const oraStr = isNaN(dtMeteo.getTime()) ? t.slice(11, 16) : orario(dtMeteo);
             out.push({
-                ora: t.slice(11, 16),
+                ora: oraStr,
                 nuvolosita: meteo.hourly.cloud_cover[i],
                 pioggia: meteo.hourly.precipitation_probability[i],
                 umidita: meteo.hourly.relative_humidity_2m[i],
@@ -352,12 +330,6 @@ function renderMeteo(serata) {
 
     const el = dom("meteoList");
 
-    /* suffisso UTC in base alla data selezionata */
-    const dv = dom("obsDate").value;
-    const sfx = dv
-        ? " (" + suffissoUTC(offsetRoma(dataOraLocale(dv + "T20:00"))) + ")"
-        : "";
-
     if (!serata || serata.length === 0) {
         el.innerHTML = na("Dati meteo non disponibili.");
         return;
@@ -368,7 +340,7 @@ function renderMeteo(serata) {
             ? 0 : Math.max(2, h.nuvolosita);
         return (
             '<div class="meteo-row">' +
-            '<span class="hh">' + h.ora + sfx + "</span>" +
+            '<span class="hh">' + h.ora + "</span>" +
             '<span class="meteo-bar-track">' +
             '<span class="meteo-bar" style="width:' + pct + '%"></span></span>' +
             '<span class="vv">' +
@@ -730,11 +702,12 @@ function renderVerdict(astro, serata) {
    EVENTI (data/eventi.json, aggiornato a mano)
 ===================================================== */
 
-function oggiRoma() {
-    return new Intl.DateTimeFormat("en-CA", {
-        timeZone: "Europe/Rome",
-        year: "numeric", month: "2-digit", day: "2-digit"
-    }).format(new Date());
+function oggiLocale() {
+    const d = new Date();
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
 }
 
 function dataPlusGiorni(dataStr, giorni) {
@@ -762,7 +735,7 @@ async function aggiornaEventi() {
         const dati = await r.json();
         const lista = dati.eventi || [];
 
-        const oggi = oggiRoma();
+        const oggi = oggiLocale();
         const limite = dataPlusGiorni(oggi, 30);
 
         const futuri = lista
@@ -782,7 +755,7 @@ async function aggiornaEventi() {
                     '<span><i class="fa-solid fa-' + icona + '"></i> ' +
                     (e.titolo || "Evento") + chip + "</span>" +
                     '<span class="t">' + fmtDayFull.format(dt) +
-                    (e.ora ? " · " + e.ora : "") + "</span></div>" +
+                    (e.ora ? " · " + (function(){ const de = new Date(e.data + "T" + e.ora); return !isNaN(de.getTime()) ? orario(de) : e.ora + " " + getUtcOffsetString(new Date()); })() : "") + "</span></div>" +
                     (e.descrizione
                         ? '<div class="evento-desc">' + e.descrizione + "</div>" : "") +
                     (e.visibilita
@@ -829,7 +802,7 @@ async function aggiornaFasi() {
         ).join("");
 
         dom("fasiNote").textContent =
-            "Momenti esatti delle fasi principali (ora locale).";
+            "Momenti esatti delle fasi principali in ora locale.";
 
     } catch (err) {
         console.error("OSSERVAZIONE.JS - Errore fasi lunari:", err);
@@ -1079,12 +1052,8 @@ async function update() {
 
 document.addEventListener("DOMContentLoaded", async function () {
 
-    /* data di default: oggi (ora italiana) */
-    const oggi = new Intl.DateTimeFormat("en-CA", {
-        timeZone: "Europe/Rome",
-        year: "numeric", month: "2-digit", day: "2-digit"
-    }).format(new Date());
-    dom("obsDate").value = oggi;
+    /* data di default: oggi (ora locale) */
+    dom("obsDate").value = oggiLocale();
 
     try {
         await loadPlaces();
@@ -1109,4 +1078,3 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     update();
 });
-

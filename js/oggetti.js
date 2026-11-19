@@ -329,7 +329,9 @@ function getObservationParams() {
         return { attivo: false };
     }
 
-    const date = dataOraLocale(`${dateValue}T${timeValue}`);   /* input interpretato in ora locale */
+    const [y, m, d] = dateValue.split("-").map(Number);
+    const [hh, mm] = timeValue.split(":").map(Number);
+    const date = new Date(y, m - 1, d, hh, mm, 0);   // input interpretato come ora locale
 
     if (isNaN(date.getTime())) {
         return { attivo: false };
@@ -482,53 +484,24 @@ const CHART_HOURS = 12;   // ore rappresentate
 const CHART_STEPS = 96;   // campioni (ogni 7,5 minuti)
 const AZ_EVERY = 2;       // etichetta azimut ogni 2 ore
 
-/* Spostamento di Europe/Rome rispetto a UTC all'istante indicato, in ore (1 o 2) */
-function offsetRoma(date) {
-
-    const dtf = new Intl.DateTimeFormat("en-US", {
-        timeZone: "Europe/Rome", hour12: false,
-        year: "numeric", month: "2-digit", day: "2-digit",
-        hour: "2-digit", minute: "2-digit", second: "2-digit"
-    });
-
-    const p = {};
-    for (const x of dtf.formatToParts(date)) p[x.type] = x.value;
-
-    const comeUTC = Date.UTC(
-        Number(p.year), Number(p.month) - 1, Number(p.day),
-        Number(p.hour) % 24, Number(p.minute), Number(p.second));
-
-    return (comeUTC - date.getTime()) / 3600000;
-}
-
-/* "UTC+1" oppure "UTC+2" in base all'ora legale */
-function suffissoUTC(off) {
-
-    return "UTC" + (off >= 0 ? "+" : "-") +
-        (Number.isInteger(Math.abs(off)) ? Math.abs(off) : Math.abs(off).toFixed(1));
-}
-
-/* Interpreta "YYYY-MM-DDThh:mm[:ss]" come ora locale italiana
-   e restituisce la Date corrispondente */
-function dataOraLocale(testo) {
-
-    const iso = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(testo)
-        ? testo + ":00" : testo;
-    const comeUTC = Date.parse(iso + "Z");
-    const off = offsetRoma(new Date(comeUTC));
-    return new Date(comeUTC - off * 3600000);
+function getUtcOffsetString(date) {
+    const d = (date instanceof Date && !isNaN(date.getTime())) ? date : new Date();
+    const offsetMin = -d.getTimezoneOffset();
+    const sign = offsetMin >= 0 ? "+" : "-";
+    const absMin = Math.abs(offsetMin);
+    const offH = Math.floor(absMin / 60);
+    const offM = absMin % 60;
+    const offMStr = offM > 0 ? `:${String(offM).padStart(2, "0")}` : "";
+    return `(UTC ${sign} ${offH}${offMStr})`;
 }
 
 function formatTimeHHMM(date) {
-
-    const fmt = new Intl.DateTimeFormat("it-IT", {
-        timeZone: "Europe/Rome",
-        hour: "2-digit",
-        minute: "2-digit"
-    });
-
-    const off = offsetRoma(date);
-    return fmt.format(date) + " (" + suffissoUTC(off) + ")";
+    if (!date) return "–";
+    const d = (date instanceof Date) ? date : new Date(date);
+    if (isNaN(d.getTime())) return "–";
+    const h = String(d.getHours()).padStart(2, "0");
+    const m = String(d.getMinutes()).padStart(2, "0");
+    return `${h}:${m} ${getUtcOffsetString(d)}`;
 }
 
 function buildAltitudeChart(obj, obs) {
@@ -792,7 +765,7 @@ function renderTable() {
             text += ` — Altezza/Azimut calcolati per: ${obs.luogo}`;
             text += ` — Clicca su una riga per il grafico delle prossime ${CHART_HOURS} ore`;
         } else {
-            text += ` — Inserisci data, ora (UTC) e luogo per calcolare altezza e azimut`;
+            text += ` — Inserisci data, ora locale e luogo per calcolare altezza e azimut`;
         }
 
         count.textContent = text;
@@ -966,6 +939,21 @@ function initFilters() {
 
     });
 
+    const now = new Date();
+    const obsDateInput = document.getElementById("obsDate");
+    const obsTimeInput = document.getElementById("obsTime");
+    if (obsDateInput && !obsDateInput.value) {
+        const y = now.getFullYear();
+        const m = String(now.getMonth() + 1).padStart(2, "0");
+        const d = String(now.getDate()).padStart(2, "0");
+        obsDateInput.value = `${y}-${m}-${d}`;
+    }
+    if (obsTimeInput && !obsTimeInput.value) {
+        const hh = String(now.getHours()).padStart(2, "0");
+        const mm = String(now.getMinutes()).padStart(2, "0");
+        obsTimeInput.value = `${hh}:${mm}`;
+    }
+
     ["obsDate", "obsTime", "obsPlace"].forEach(id => {
         const field = document.getElementById(id);
         if (!field) return;
@@ -1038,4 +1026,3 @@ document.addEventListener(
         loadPlaces();
     }
 );
-
